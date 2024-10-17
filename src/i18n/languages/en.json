@@ -1,4 +1,10 @@
 {
+  "home": {
+    "title": "Welcome to the Clinic Management System",
+    "subtitle": "Here you can manage your clients, services, work orders and anamneses.",
+    "login": "Login",
+    "register": "Register"
+  },
   "dashboard": {
     "title": "Dashboard",
     "subtitle": "Welcome to the dashboard",
@@ -6,5 +12,21 @@
     "services": "Services",
     "workOrders": "Work Orders",
     "anamnesis": "Anamnesis"
+  },
+  "register": {
+    "title": "Register",
+    "subtitle": "Fill in the fields below to register",
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Type your first name",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Type your last name",
+    "email": "E-mail",
+    "emailPlaceholder": "Type your e-mail",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "passwordValidation": "Password must be at least 6 characters",
+    "confirmPasswordValidation": "Passwords must match",
+    "register": "Register",
+    "login": "Already have an account? Login"
   }
 }

@@ -1,4 +1,11 @@
 {
+  "home": {
+    "title": "Bem-vindo ao Sistema de Gestão de Clínicas",
+    "subtitle": "Aqui você pode gerenciar seus clientes, serviços, ordens de serviço e anamneses.",
+    "login": "Entrar",
+    "register": "Cadastrar-se",
+    "appName": "Pratico"
+  },
   "dashboard": {
     "title": "Painel de Controle",
     "subtitle": "Bem-vindo ao painel de controle",
@@ -6,5 +13,21 @@
     "services": "Serviços",
     "workOrders": "Ordens de Serviço",
     "anamnesis": "Anamnese"
+  },
+  "register": {
+    "title": "Crie sua conta",
+    "subtitle": "Preencha os campos abaixo para se cadastrar",
+    "firstName": "Nome",
+    "firstNamePlaceholder": "Digite seu nome",
+    "lastName": "Sobrenome",
+    "lastNamePlaceholder": "Digite seu sobrenome",
+    "email": "E-mail",
+    "emailPlaceholder": "Digite seu e-mail",
+    "password": "Senha",
+    "confirmPassword": "Confirme a senha",
+    "passwordValidation": "A senha deve conter pelo menos 6 caracteres",
+    "confirmPasswordValidation": "As senhas devem ser iguais",
+    "register": "Cadastrar-se",
+    "login": "Já possui uma conta? Entrar"
   }
 }

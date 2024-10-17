@@ -28,14 +28,7 @@ const RootLayout: React.FC<DashboardLayoutProps> = async ({
             grayColor="gray"
             panelBackground="translucent"
           >
-            <Container
-              p={{
-                xs: "1",
-                md: "2",
-              }}
-            >
-              {children}
-            </Container>
+            <Container height="100vh">{children}</Container>
           </Theme>
         </NextIntlClientProvider>
       </body>
