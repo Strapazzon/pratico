@@ -1,0 +1,10 @@
+{
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Welcome to the dashboard",
+    "clients": "Clients",
+    "services": "Services",
+    "workOrders": "Work Orders",
+    "anamnesis": "Anamnesis"
+  }
+}

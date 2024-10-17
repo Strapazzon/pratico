@@ -1,0 +1,10 @@
+{
+  "dashboard": {
+    "title": "Painel de Controle",
+    "subtitle": "Bem-vindo ao painel de controle",
+    "clients": "Clientes",
+    "services": "Serviços",
+    "workOrders": "Ordens de Serviço",
+    "anamnesis": "Anamnese"
+  }
+}
