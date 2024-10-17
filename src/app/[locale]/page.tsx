@@ -26,6 +26,7 @@ export default function Home() {
         justify="center"
         align="center"
         height="100%"
+        p={{ initial: "2", md: "4" }}
       >
         <Heading mb="2" size="6" color="gray">
           {t("title")}

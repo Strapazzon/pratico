@@ -1,6 +1,6 @@
 import { Box, Text, TextField } from "@radix-ui/themes";
 import React from "react";
-import { useFormContext, UseFormRegister } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 type FieldInputType =
   | "date"

@@ -3,14 +3,7 @@
 import { generateHashSha512, generateSalt } from "@lib/auth/cryptographic";
 import { jwtGenerateRefreshToken, jwtGenerateToken } from "@lib/auth/jwt";
 import { existsUserByEmail, insertUser } from "@repositories/userRepository";
-import { UserRegister } from "@types";
-
-interface RegisterUserServerActionResponse {
-  success: boolean;
-  token?: string;
-  refreshToken?: string;
-  error?: "passwordsDoNotMatch" | "emailAlreadyExists" | "unknownError";
-}
+import { RegisterUserServerActionResponse, UserRegister } from "@types";
 
 export async function registerUserServerAction(
   userData: UserRegister

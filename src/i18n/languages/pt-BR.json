@@ -29,5 +29,12 @@
     "confirmPasswordValidation": "As senhas devem ser iguais",
     "register": "Cadastrar-se",
     "login": "Já possui uma conta? Entrar"
+  },
+  "dialogEmailAlreadyRegistered": {
+    "title": "E-mail já cadastrado",
+    "description": " Este email já esta cadastrado, por favor faça login ou recupere sua senha.",
+    "close": "Fechar",
+    "login": "Entrar",
+    "recoverPassword": "Recuperar Senha"
   }
 }

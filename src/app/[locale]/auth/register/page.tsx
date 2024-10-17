@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import "./register-style.scss";
 import { Box, Button, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
@@ -10,18 +10,28 @@ import { FieldForm } from "@components/UI/FieldForm";
 import { FormProvider, useForm } from "react-hook-form";
 import { UserRegister } from "@types";
 import { registerUserServerAction } from "@server-actions/registerUserServerAction";
+import { TextureBackground } from "@components/UI/TextureBackground";
+import { DialogEmailAlreadyRegistered } from "@components/dialogs/DialogEmailAlreadyRegistered";
 
 const RegisterPage: React.FC = () => {
   const t = useTranslations("register");
   const form = useForm<UserRegister>();
+  const [dialogEmailErrorIsOpen, setDialogEmailErrorIsOpen] = useState(false);
   const {
     handleSubmit,
     formState: { errors },
   } = form;
 
   const onSubmit = async (data: UserRegister) => {
-    const response = await registerUserServerAction(data);
-    console.log(response);
+    const { success, error } = await registerUserServerAction(data);
+    if (success) {
+      return;
+    }
+
+    if (error === "emailAlreadyExists") {
+      setDialogEmailErrorIsOpen(true);
+    }
+
     return;
   };
 
@@ -34,6 +44,12 @@ const RegisterPage: React.FC = () => {
       justify="center"
       align="center"
     >
+      <TextureBackground />
+      <DialogEmailAlreadyRegistered
+        open={dialogEmailErrorIsOpen}
+        onClose={() => setDialogEmailErrorIsOpen(false)}
+      />
+
       <Flex direction="column" gap="2" align="center" mb="6">
         <Heading>{t("title")}</Heading>
         <Text>{t("subtitle")}</Text>
@@ -44,7 +60,6 @@ const RegisterPage: React.FC = () => {
           xs: "100%",
           sm: "50%",
           md: "40%",
-          lg: "30%",
         }}
       >
         <Card className="card">

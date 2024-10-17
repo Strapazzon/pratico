@@ -3,7 +3,6 @@
 import { Button, DropdownMenu } from "@radix-ui/themes";
 import {
   Briefcase,
-  ClipboardList,
   FileText,
   ListOrdered,
   MenuIcon,

@@ -6,3 +6,10 @@ export interface UserRegister {
   password: string;
   confirmPassword: string;
 }
+
+export interface RegisterUserServerActionResponse {
+  success: boolean;
+  token?: string;
+  refreshToken?: string;
+  error?: "passwordsDoNotMatch" | "emailAlreadyExists" | "unknownError";
+}

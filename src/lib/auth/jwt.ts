@@ -77,7 +77,7 @@ export const jwtVerifyRefreshToken = (token: string) => {
     return jwt.verify(token, privateKey) as {
       data: JwtRefreshTokenData;
     };
-  } catch (error) {
+  } catch {
     throw new Error("Access denied.");
   }
 };
@@ -87,7 +87,7 @@ export const jwtVerifyResetToken = (token: string) => {
     return jwt.verify(token, privateKey) as {
       data: JwtResetPasswordTokenData;
     };
-  } catch (error) {
+  } catch {
     throw new Error("Access denied.");
   }
 };
