@@ -2,15 +2,7 @@
 
 import React from "react";
 import "./register-style.scss";
-import {
-  Box,
-  Button,
-  Card,
-  Flex,
-  Heading,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
+import { Box, Button, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import { Forward } from "lucide-react";
 import { Link } from "@i18n/routing";
@@ -27,8 +19,9 @@ const RegisterPage: React.FC = () => {
     formState: { errors },
   } = form;
 
-  const onSubmit = (data: UserRegister) => {
-    registerUserServerAction(data);
+  const onSubmit = async (data: UserRegister) => {
+    const response = await registerUserServerAction(data);
+    console.log(response);
     return;
   };
 

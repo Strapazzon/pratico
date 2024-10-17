@@ -23,7 +23,9 @@
       "@types": ["./src/types"],
       "@i18n/*": ["./src/i18n/*"],
       "@styles/*": ["./src/styles/*"],
-      "@server-actions/*": ["./src/server-actions/*"]
+      "@server-actions/*": ["./src/server-actions/*"],
+      "@database/*": ["./src/database/*"],
+      "@repositories/*": ["./src/repositories/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

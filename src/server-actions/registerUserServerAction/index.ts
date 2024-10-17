@@ -1,11 +1,14 @@
 "use server";
 
 import { generateHashSha512, generateSalt } from "@lib/auth/cryptographic";
+import { jwtGenerateRefreshToken, jwtGenerateToken } from "@lib/auth/jwt";
+import { existsUserByEmail, insertUser } from "@repositories/userRepository";
 import { UserRegister } from "@types";
 
 interface RegisterUserServerActionResponse {
   success: boolean;
   token?: string;
+  refreshToken?: string;
   error?: "passwordsDoNotMatch" | "emailAlreadyExists" | "unknownError";
 }
 
@@ -21,18 +24,39 @@ export async function registerUserServerAction(
     };
   }
 
+  const existUser = await existsUserByEmail(email);
+
+  if (existUser) {
+    return {
+      success: false,
+      error: "emailAlreadyExists",
+    };
+  }
+
   const salt = generateSalt();
   const passwordHash = generateHashSha512(password, salt);
 
-  console.log("User registered", {
+  const user = await insertUser({
     firstName,
     lastName,
     email,
+    salt,
     passwordHash,
+  });
+
+  const token = await jwtGenerateToken({
+    id: user.userId,
+    email,
+  });
+
+  const refreshToken = await jwtGenerateRefreshToken({
+    id: user.userId,
+    type: "refresh",
   });
 
   return {
     success: true,
-    token: "  ",
+    token,
+    refreshToken,
   };
 }
