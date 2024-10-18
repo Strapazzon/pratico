@@ -15,6 +15,8 @@ const algorithm: jwt.Algorithm = "HS512";
 export type JwtTokenData = {
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
 };
 
 export type JwtRefreshTokenData = {
@@ -61,11 +63,15 @@ export const jwtGenerateResetPasswordToken = async (
 export const jwtGenerateResetPasswordTokenHash = (token: string) =>
   generateHashSha512(token, privateKey);
 
-export const jwtVerifyToken = (token: string): Promise<JwtTokenData> =>
+export const jwtVerifyToken = (token?: string): Promise<JwtTokenData> =>
   new Promise((resolve, reject) => {
+    if (!token) {
+      return reject(new Error("TokenExpiredError"));
+    }
+
     jwt.verify(token, privateKey, (err, decoded) => {
       if (err) {
-        reject(new Error("TokenExpiredError"));
+        return reject(new Error("TokenExpiredError"));
       }
 
       resolve((decoded as jwt.JwtPayload)?.data as JwtTokenData);

@@ -8,8 +8,5 @@ export interface UserRegister {
 }
 
 export interface RegisterUserServerActionResponse {
-  success: boolean;
-  token?: string;
-  refreshToken?: string;
   error?: "passwordsDoNotMatch" | "emailAlreadyExists" | "unknownError";
 }

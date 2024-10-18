@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, DropdownMenu } from "@radix-ui/themes";
+import { DropdownMenu } from "@radix-ui/themes";
 import {
   Briefcase,
   FileText,
@@ -9,24 +9,22 @@ import {
   Users,
 } from "lucide-react";
 import { Link } from "@i18n/routing";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { useTranslations } from "next-intl";
 
 export const DashBoardDropdownMenu: React.FC = () => {
-  const router = useRouter();
   const t = useTranslations("dashboard");
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Button variant="ghost">
+        <button className="ghost-button">
           <MenuIcon className="h-6 w-6" />
-        </Button>
+        </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
-        <Link href="/dashboard/clients">
-          <DropdownMenu.Item onClick={() => router.push("/dashboard/clients")}>
+        <Link href="/dashboard/customers">
+          <DropdownMenu.Item>
             <Users className="mr-2 h-5 w-5" />
             <span>{t("clients")}</span>
           </DropdownMenu.Item>

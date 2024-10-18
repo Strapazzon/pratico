@@ -2,11 +2,13 @@ import { Link } from "@i18n/routing";
 import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import "./page.scss";
+import { TextureBackground } from "@components/UI/TextureBackground";
 
 export default function Home() {
   const t = useTranslations("home");
   return (
     <Flex direction="column" gap="1" height="100%">
+      <TextureBackground />
       <div className="header">
         <Heading mb="2" size="6">
           {t("appName")}

@@ -1,9 +1,11 @@
 "use server";
 
+import { redirect } from "@i18n/routing";
 import { generateHashSha512, generateSalt } from "@lib/auth/cryptographic";
 import { jwtGenerateRefreshToken, jwtGenerateToken } from "@lib/auth/jwt";
 import { existsUserByEmail, insertUser } from "@repositories/userRepository";
 import { RegisterUserServerActionResponse, UserRegister } from "@types";
+import { cookies } from "next/headers";
 
 export async function registerUserServerAction(
   userData: UserRegister
@@ -12,7 +14,6 @@ export async function registerUserServerAction(
 
   if (password !== userData.confirmPassword) {
     return {
-      success: false,
       error: "passwordsDoNotMatch",
     };
   }
@@ -21,7 +22,6 @@ export async function registerUserServerAction(
 
   if (existUser) {
     return {
-      success: false,
       error: "emailAlreadyExists",
     };
   }
@@ -40,6 +40,8 @@ export async function registerUserServerAction(
   const token = await jwtGenerateToken({
     id: user.userId,
     email,
+    firstName,
+    lastName,
   });
 
   const refreshToken = await jwtGenerateRefreshToken({
@@ -47,9 +49,18 @@ export async function registerUserServerAction(
     type: "refresh",
   });
 
-  return {
-    success: true,
-    token,
-    refreshToken,
-  };
+  cookies().set("auth-token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 60 * 60 * 24, // One day
+    path: "/",
+  });
+
+  cookies().set("refresh-token", refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 60 * 60 * 24 * 7, // One week
+  });
+
+  return redirect(`/dashboard`);
 }

@@ -23,12 +23,9 @@ const RegisterPage: React.FC = () => {
   } = form;
 
   const onSubmit = async (data: UserRegister) => {
-    const { success, error } = await registerUserServerAction(data);
-    if (success) {
-      return;
-    }
+    const registerResp = await registerUserServerAction(data);
 
-    if (error === "emailAlreadyExists") {
+    if (registerResp?.error === "emailAlreadyExists") {
       setDialogEmailErrorIsOpen(true);
     }
 

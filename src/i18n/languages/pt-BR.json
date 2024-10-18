@@ -30,6 +30,17 @@
     "register": "Cadastrar-se",
     "login": "Já possui uma conta? Entrar"
   },
+  "login": {
+    "title": "Entrar",
+    "subtitle": "Preencha os campos abaixo para entrar",
+    "email": "E-mail",
+    "emailPlaceholder": "Digite seu e-mail",
+    "password": "Senha",
+    "login": "Entrar",
+    "register": "Não possui uma conta? Cadastrar-se",
+    "forgotPassword": "Esqueceu a senha?",
+    "invalidCredentials": "Credenciais inválidas"
+  },
   "dialogEmailAlreadyRegistered": {
     "title": "E-mail já cadastrado",
     "description": " Este email já esta cadastrado, por favor faça login ou recupere sua senha.",

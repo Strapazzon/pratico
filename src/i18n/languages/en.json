@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Welcome to the Clinic Management System",
-    "subtitle": "Here you can manage your clients, services, work orders and anamneses.",
+    "subtitle": "Here you can manage your customers, services, work orders and anamneses.",
     "login": "Login",
     "register": "Register",
     "appName": "Pratico"
@@ -9,7 +9,7 @@
   "dashboard": {
     "title": "Dashboard",
     "subtitle": "Welcome to the dashboard",
-    "clients": "Clients",
+    "clients": "Customers",
     "services": "Services",
     "workOrders": "Work Orders",
     "anamnesis": "Anamnesis"
@@ -29,6 +29,17 @@
     "confirmPasswordValidation": "Passwords must match",
     "register": "Register",
     "login": "Already have an account? Login"
+  },
+  "login": {
+    "title": "Login",
+    "subtitle": "Fill in the fields below to login",
+    "email": "E-mail",
+    "emailPlaceholder": "Type your e-mail",
+    "password": "Password",
+    "login": "Login",
+    "register": "Don't have an account? Register",
+    "forgotPassword": "Forgot Password?",
+    "invalidCredentials": "Invalid credentials"
   },
   "dialogEmailAlreadyRegistered": {
     "title": "Email already registered",
