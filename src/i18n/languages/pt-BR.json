@@ -4,7 +4,7 @@
     "subtitle": "Aqui você pode gerenciar seus clientes, serviços, ordens de serviço e anamneses.",
     "login": "Entrar",
     "register": "Cadastrar-se",
-    "appName": "Pratico"
+    "appName": "Prático"
   },
   "dashboard": {
     "title": "Painel de Controle",
@@ -52,5 +52,9 @@
     "profile": "Perfil",
     "settings": "Configurações",
     "logout": "Sair"
+  },
+  "seo": {
+    "title": "Prático",
+    "description": "Sistema de gestão de clínicas para gerenciar clientes, serviços, ordens de serviço e anamneses."
   }
 }

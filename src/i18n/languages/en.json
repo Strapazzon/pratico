@@ -4,7 +4,7 @@
     "subtitle": "Here you can manage your customers, services, work orders and anamneses.",
     "login": "Login",
     "register": "Register",
-    "appName": "Pratico"
+    "appName": "Prático"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -51,5 +51,9 @@
     "profile": "Profile",
     "settings": "Settings",
     "logout": "Logout"
+  },
+  "seo": {
+    "title": "Prático",
+    "description": "Clinic management system to manage customers, services, work orders and anamneses."
   }
 }
