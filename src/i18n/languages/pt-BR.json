@@ -47,5 +47,10 @@
     "close": "Fechar",
     "login": "Entrar",
     "recoverPassword": "Recuperar Senha"
+  },
+  "profileMenu": {
+    "profile": "Perfil",
+    "settings": "Configurações",
+    "logout": "Sair"
   }
 }

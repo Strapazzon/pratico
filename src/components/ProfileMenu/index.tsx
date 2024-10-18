@@ -4,10 +4,12 @@ import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
 import { Avatar, DropdownMenu, Flex, Heading, Text } from "@radix-ui/themes";
 import { logoutServerAction } from "@server-actions/logoutServerAction";
 import { LogOut } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useContext } from "react";
 
 export const ProfileMenu: React.FC = () => {
   const { userData, userNameInitials } = useContext(AuthLoggedUserContext);
+  const t = useTranslations("profileMenu");
 
   const logoutHandler = () => {
     logoutServerAction();
@@ -30,12 +32,12 @@ export const ProfileMenu: React.FC = () => {
           </Flex>
         </DropdownMenu.Label>
         <DropdownMenu.Separator />
-        <DropdownMenu.Item>Perfil</DropdownMenu.Item>
-        <DropdownMenu.Item>Configurações</DropdownMenu.Item>
+        <DropdownMenu.Item>{t("profile")}</DropdownMenu.Item>
+        <DropdownMenu.Item>{t("Settings")}</DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item onClick={logoutHandler}>
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
+          <LogOut />
+          <span>{t("logout")}</span>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

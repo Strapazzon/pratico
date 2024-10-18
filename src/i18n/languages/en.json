@@ -46,5 +46,10 @@
     "description": "This email is already registered, please login or recover your password.",
     "login": "Login",
     "recoverPassword": "Recover Password"
+  },
+  "profileMenu": {
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
   }
 }
