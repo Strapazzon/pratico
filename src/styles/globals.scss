@@ -8,7 +8,14 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-  cursor: pointer;
+  cursor: pointer !important;
+}
+
+button {
+  cursor: pointer !important;
+  &[disabled] {
+    cursor: not-allowed !important;
+  }
 }
 
 :root,

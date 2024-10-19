@@ -60,10 +60,6 @@ const RegisterPage: React.FC = () => {
         onClose={() => setDialogEmailErrorIsOpen(false)}
       />
 
-      <Flex direction="column" gap="2" align="center" mb="6">
-        <Heading>{t("title")}</Heading>
-        <Text>{t("subtitle")}</Text>
-      </Flex>
       <Box
         width={{
           initial: "100%",
@@ -73,6 +69,10 @@ const RegisterPage: React.FC = () => {
         }}
       >
         <Card className="card">
+          <Flex direction="column" gap="2" align="center" my="6">
+            <Heading>{t("title")}</Heading>
+            <Text>{t("subtitle")}</Text>
+          </Flex>
           <FormProvider {...form}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Flex direction="column" gap="2" mb="4">

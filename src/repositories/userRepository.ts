@@ -1,7 +1,6 @@
-"use server";
+import "server-only";
 
-import { db } from "@database/index";
-import { InsertUserRow, UserRow } from "@database/tables/userTable";
+import { db, InsertUserRow, UserRow } from "@database";
 
 export async function insertUser(user: InsertUserRow): Promise<UserRow> {
   const insertedUser = await db

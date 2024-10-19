@@ -3,13 +3,13 @@
 import { redirect } from "@i18n/routing";
 import { generateHashSha512, generateSalt } from "@lib/auth/cryptographic";
 import { jwtGenerateRefreshToken, jwtGenerateToken } from "@lib/auth/jwt";
+import { setAuthCookies } from "@lib/auth/setAuthCookies";
 import {
   burnInviteCode,
   inviteCodeIsValid,
 } from "@repositories/inviteRepository";
 import { existsUserByEmail, insertUser } from "@repositories/userRepository";
 import { RegisterUserServerActionResponse, UserRegister } from "@types";
-import { cookies } from "next/headers";
 
 export async function registerUserServerAction(
   userData: UserRegister
@@ -56,6 +56,7 @@ export async function registerUserServerAction(
     email,
     firstName,
     lastName,
+    organizations: [],
   });
 
   const refreshToken = await jwtGenerateRefreshToken({
@@ -63,18 +64,7 @@ export async function registerUserServerAction(
     type: "refresh",
   });
 
-  cookies().set("auth-token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24, // One day
-    path: "/",
-  });
-
-  cookies().set("refresh-token", refreshToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24 * 7, // One week
-  });
+  setAuthCookies(token, refreshToken);
 
   return redirect(`/dashboard`);
 }

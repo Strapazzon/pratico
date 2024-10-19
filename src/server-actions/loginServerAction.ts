@@ -2,8 +2,14 @@
 
 import { redirect } from "@i18n/routing";
 import { validatePassword } from "@lib/auth/cryptographic";
-import { jwtGenerateRefreshToken, jwtGenerateToken } from "@lib/auth/jwt";
-import { findUserByEmail } from "@repositories/userRepository";
+import {
+  jwtGenerateRefreshToken,
+  jwtGenerateToken,
+  jwtVerifyRefreshToken,
+} from "@lib/auth/jwt";
+import { setAuthCookies } from "@lib/auth/setAuthCookies";
+import { listOrganizationsByUserOwnerId } from "@repositories/organizationRepository";
+import { findUserByEmail, findUserById } from "@repositories/userRepository";
 import { LoginServerActionResponse } from "@types";
 import { cookies } from "next/headers";
 
@@ -35,11 +41,14 @@ export async function loginServerAction(
     };
   }
 
+  const userOrganizations = await listOrganizationsByUserOwnerId(user.userId);
+
   const token = await jwtGenerateToken({
     id: user.userId,
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
+    organizations: userOrganizations.map((org) => org.organizationId),
   });
 
   const refreshToken = await jwtGenerateRefreshToken({
@@ -47,18 +56,44 @@ export async function loginServerAction(
     type: "refresh",
   });
 
-  cookies().set("auth-token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24, // One day
-    path: "/",
-  });
-
-  cookies().set("refresh-token", refreshToken, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24 * 7, // One week
-  });
+  setAuthCookies(token, refreshToken);
 
   return redirect(`/dashboard`);
 }
+
+export const refreshTokenServerAction =
+  async (): Promise<LoginServerActionResponse> => {
+    const refreshToken = await cookies().get("refresh-token");
+
+    if (!refreshToken?.value) {
+      return redirect(`/login`);
+    }
+
+    const decoded = jwtVerifyRefreshToken(refreshToken?.value);
+    const tokenUserId = decoded.data.id;
+
+    const user = await findUserById(tokenUserId);
+
+    if (!user) {
+      return redirect(`/login`);
+    }
+
+    const userOrganizations = await listOrganizationsByUserOwnerId(user.userId);
+
+    const token = await jwtGenerateToken({
+      id: user.userId,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      organizations: userOrganizations.map((org) => org.organizationId),
+    });
+
+    const newRefreshToken = await jwtGenerateRefreshToken({
+      id: user.userId,
+      type: "refresh",
+    });
+
+    setAuthCookies(token, newRefreshToken);
+
+    return {};
+  };

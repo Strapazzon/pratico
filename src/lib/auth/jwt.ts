@@ -17,6 +17,7 @@ export type JwtTokenData = {
   email: string;
   firstName: string;
   lastName: string;
+  organizations: number[];
 };
 
 export type JwtRefreshTokenData = {

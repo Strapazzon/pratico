@@ -1,8 +1,6 @@
-"use server";
+import { Generated } from "kysely";
 
-import { Generated, Insertable, Selectable, Updateable } from "kysely";
-
-export interface CustomerTable {
+export interface CustomerEntity {
   customerId: Generated<number>;
   firstName: string;
   lastName: string;
@@ -18,7 +16,3 @@ export interface CustomerTable {
   taxNumber: string;
   notes: string | null;
 }
-
-export type CustomerRow = Selectable<CustomerTable>;
-export type InsertCustomerRow = Insertable<CustomerTable>;
-export type UpdateCustomerRow = Updateable<CustomerTable>;

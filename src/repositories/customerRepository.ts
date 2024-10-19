@@ -1,5 +1,6 @@
-import { db } from "@database/index";
-import { CustomerRow, InsertCustomerRow } from "@database/tables/customerTable";
+import "server-only";
+
+import { CustomerRow, db, InsertCustomerRow } from "@database";
 
 export async function insertCustomer(
   customer: InsertCustomerRow

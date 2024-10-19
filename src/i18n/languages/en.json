@@ -54,10 +54,33 @@
   "profileMenu": {
     "profile": "Profile",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Logout",
+    "organization": "Organization"
   },
   "seo": {
     "title": "Prático",
     "description": "Clinic management system to manage customers, services, work orders and anamneses."
+  },
+  "customers": {
+    "addCustomer": "New Customer"
+  },
+  "newOrganization": {
+    "title": "Organization",
+    "form": {
+      "name": "Name",
+      "email": "E-mail",
+      "address": "Address",
+      "addressComplement": "Address Complement",
+      "addressNumber": "Address Number",
+      "city": "City",
+      "country": "Country",
+      "postalCode": "Postal Code",
+      "phoneNumber": "Phone Number",
+      "phoneNumberPlaceholder": "XXX XXXX XXXX",
+      "taxNumber": "Tax Number",
+      "website": "Website",
+      "mandatoryField": "This field is mandatory",
+      "save": "Save"
+    }
   }
 }

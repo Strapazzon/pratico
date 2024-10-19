@@ -1,16 +1,17 @@
+import "server-only";
 import { createKysely } from "@vercel/postgres-kysely";
-import { UserTable } from "./tables/userTable";
-import { CustomerTable } from "./tables/customerTable";
-import { OrganizationTable } from "./tables/organizationTable";
-import { InviteTable } from "./tables/inviteTable";
+import { CustomerEntity } from "@entities/customerEntity";
+import { InviteEntity } from "@entities/inviteEntity";
+import { OrganizationEntity } from "@entities/organizationEntity";
+import { UserEntity } from "@entities/userEntity";
+
+export * from "./operations";
 
 export interface Database {
-  user: UserTable;
-  customer: CustomerTable;
-  organization: OrganizationTable;
-  invite: InviteTable;
+  user: UserEntity;
+  customer: CustomerEntity;
+  invite: InviteEntity;
+  organization: OrganizationEntity;
 }
-
-export type DatabaseTable = keyof Database;
 
 export const db = createKysely<Database>();

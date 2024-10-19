@@ -6,6 +6,7 @@ import React, { createContext, useCallback, useEffect } from "react";
 type AuthLoggedUserContextProps = {
   userData?: JwtTokenData | null;
   userNameInitials?: string;
+  refreshUserData: () => void;
 };
 
 type AuthLoggedUserProviderProps = {
@@ -13,7 +14,7 @@ type AuthLoggedUserProviderProps = {
 };
 
 export const AuthLoggedUserContext = createContext<AuthLoggedUserContextProps>(
-  {}
+  {} as AuthLoggedUserContextProps
 );
 
 export const AuthLoggedUserProvider: React.FC<AuthLoggedUserProviderProps> = ({
@@ -41,12 +42,18 @@ export const AuthLoggedUserProvider: React.FC<AuthLoggedUserProviderProps> = ({
     }
   }, [getUserNameInitials]);
 
+  const refreshUserData = useCallback(async () => {
+    await fetchUserData();
+  }, [fetchUserData]);
+
   useEffect(() => {
     fetchUserData();
   }, [fetchUserData]);
 
   return (
-    <AuthLoggedUserContext.Provider value={{ userData, userNameInitials }}>
+    <AuthLoggedUserContext.Provider
+      value={{ userData, userNameInitials, refreshUserData }}
+    >
       {children}
     </AuthLoggedUserContext.Provider>
   );

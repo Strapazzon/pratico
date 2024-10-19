@@ -1,6 +1,6 @@
-"use server";
+import "server-only";
 
-import { db } from "@database/index";
+import { db } from "@database";
 
 export async function burnInviteCode(
   inviteCode: string,

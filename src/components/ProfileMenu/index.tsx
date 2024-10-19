@@ -1,15 +1,18 @@
 "use client";
 
+import { useRouter } from "@i18n/routing";
 import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
 import { Avatar, DropdownMenu, Flex, Heading, Text } from "@radix-ui/themes";
 import { logoutServerAction } from "@server-actions/logoutServerAction";
-import { LogOut } from "lucide-react";
+import { Building2, LogOut } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { useContext } from "react";
 
 export const ProfileMenu: React.FC = () => {
   const { userData, userNameInitials } = useContext(AuthLoggedUserContext);
   const t = useTranslations("profileMenu");
+  const organizationId = userData?.organizations[0] ?? "new";
+  const router = useRouter();
 
   const logoutHandler = () => {
     logoutServerAction();
@@ -32,6 +35,16 @@ export const ProfileMenu: React.FC = () => {
           </Flex>
         </DropdownMenu.Label>
         <DropdownMenu.Separator />
+        <DropdownMenu.Item
+          onClick={() =>
+            router.push(`/dashboard/organization/${organizationId}/edit`)
+          }
+        >
+          <Flex align="center" gap="1">
+            <Building2 size="16" />
+            {t("organization")}
+          </Flex>
+        </DropdownMenu.Item>
         <DropdownMenu.Item>{t("profile")}</DropdownMenu.Item>
         <DropdownMenu.Item>{t("settings")}</DropdownMenu.Item>
         <DropdownMenu.Separator />

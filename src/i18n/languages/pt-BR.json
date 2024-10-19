@@ -55,10 +55,33 @@
   "profileMenu": {
     "profile": "Perfil",
     "settings": "Configurações",
-    "logout": "Sair"
+    "logout": "Sair",
+    "organization": "Empresa"
   },
   "seo": {
     "title": "Prático",
     "description": "Sistema de gestão de clínicas para gerenciar clientes, serviços, ordens de serviço e anamneses."
+  },
+  "customers": {
+    "addCustomer": "Novo Cliente"
+  },
+  "newOrganization": {
+    "title": "Empresa",
+    "form": {
+      "name": "Nome",
+      "email": "E-mail",
+      "address": "Endereço",
+      "addressComplement": "Complemento",
+      "addressNumber": "Número",
+      "city": "Cidade",
+      "country": "País",
+      "postalCode": "Código Postal",
+      "phoneNumber": "Telefone",
+      "phoneNumberPlaceholder": "XXX XXXX XXXX",
+      "taxNumber": "Número de Identificação Fiscal",
+      "website": "Website",
+      "mandatoryField": "Este campo é obrigatório",
+      "save": "Salvar"
+    }
   }
 }

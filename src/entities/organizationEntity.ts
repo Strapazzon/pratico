@@ -1,14 +1,13 @@
-"use server";
+import { Generated } from "kysely";
 
-import { Generated, Insertable, Selectable, Updateable } from "kysely";
-
-export interface OrganizationTable {
+export interface OrganizationEntity {
   organizationId: Generated<number>;
   name: string;
   email: string;
   createdAt: Generated<Date>;
   address: string | null;
   addressComplement: string | null;
+  addressNumber: string | null;
   city: string | null;
   postalCode: string | null;
   country: string | null;
@@ -17,7 +16,3 @@ export interface OrganizationTable {
   website: string | null;
   userOwnerId: number;
 }
-
-export type OrganizationRow = Selectable<OrganizationTable>;
-export type InsertOrganizationRow = Insertable<OrganizationTable>;
-export type UpdateOrganizationRow = Updateable<OrganizationTable>;
