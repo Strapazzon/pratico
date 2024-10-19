@@ -3,6 +3,10 @@
 import { redirect } from "@i18n/routing";
 import { generateHashSha512, generateSalt } from "@lib/auth/cryptographic";
 import { jwtGenerateRefreshToken, jwtGenerateToken } from "@lib/auth/jwt";
+import {
+  burnInviteCode,
+  inviteCodeIsValid,
+} from "@repositories/inviteRepository";
 import { existsUserByEmail, insertUser } from "@repositories/userRepository";
 import { RegisterUserServerActionResponse, UserRegister } from "@types";
 import { cookies } from "next/headers";
@@ -26,6 +30,14 @@ export async function registerUserServerAction(
     };
   }
 
+  const validInviteCode = await inviteCodeIsValid(userData.inviteCode);
+
+  if (!validInviteCode) {
+    return {
+      error: "invalidInviteCode",
+    };
+  }
+
   const salt = generateSalt();
   const passwordHash = generateHashSha512(password, salt);
 
@@ -36,6 +48,8 @@ export async function registerUserServerAction(
     salt,
     passwordHash,
   });
+
+  await burnInviteCode(userData.inviteCode, user.userId);
 
   const token = await jwtGenerateToken({
     id: user.userId,

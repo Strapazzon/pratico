@@ -3,15 +3,15 @@
 import { Generated, Insertable, Selectable, Updateable } from "kysely";
 
 export interface UserTable {
-  userId: Generated<string>;
-  firstName: string | null;
-  lastName: string | null;
-  email: string | null;
+  userId: Generated<number>;
+  firstName: string;
+  lastName: string;
+  email: string;
   createdAt: Generated<Date>;
   passwordHash: string;
   salt: string;
 }
 
 export type UserRow = Selectable<UserTable>;
-export type InsertableUserRow = Insertable<UserTable>;
-export type UpdateableUserRow = Updateable<UserTable>;
+export type InsertUserRow = Insertable<UserTable>;
+export type UpdateUserRow = Updateable<UserTable>;

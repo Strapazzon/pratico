@@ -13,7 +13,7 @@ const resetPasswordTokenLife = Number(
 const algorithm: jwt.Algorithm = "HS512";
 
 export type JwtTokenData = {
-  id: string;
+  id: number;
   email: string;
   firstName: string;
   lastName: string;
@@ -21,7 +21,7 @@ export type JwtTokenData = {
 
 export type JwtRefreshTokenData = {
   type: "refresh";
-  id: string;
+  id: number;
 };
 
 export type JwtResetPasswordTokenData = {

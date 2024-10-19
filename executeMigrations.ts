@@ -35,6 +35,7 @@ export async function executeMigration() {
       path,
       migrationFolder: path.join(__dirname, "./src/database/migrations"),
     }),
+    allowUnorderedMigrations: false,
   });
 
   const { error, results } = await migrator.migrateToLatest();

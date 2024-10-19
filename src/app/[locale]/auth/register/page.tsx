@@ -2,9 +2,17 @@
 
 import React, { useState } from "react";
 import "./register-style.scss";
-import { Box, Button, Card, Flex, Heading, Text } from "@radix-ui/themes";
+import {
+  Box,
+  Button,
+  Callout,
+  Card,
+  Flex,
+  Heading,
+  Text,
+} from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
-import { Forward } from "lucide-react";
+import { Forward, OctagonAlert } from "lucide-react";
 import { Link } from "@i18n/routing";
 import { FieldForm } from "@components/UI/FieldForm";
 import { FormProvider, useForm } from "react-hook-form";
@@ -17,6 +25,7 @@ const RegisterPage: React.FC = () => {
   const t = useTranslations("register");
   const form = useForm<UserRegister>();
   const [dialogEmailErrorIsOpen, setDialogEmailErrorIsOpen] = useState(false);
+  const [invalidInviteCode, setInvalidInviteCode] = useState(false);
   const {
     handleSubmit,
     formState: { errors },
@@ -27,6 +36,10 @@ const RegisterPage: React.FC = () => {
 
     if (registerResp?.error === "emailAlreadyExists") {
       setDialogEmailErrorIsOpen(true);
+    }
+
+    if (registerResp?.error === "invalidInviteCode") {
+      setInvalidInviteCode(true);
     }
 
     return;
@@ -116,7 +129,32 @@ const RegisterPage: React.FC = () => {
                     return true;
                   }}
                 />
+
+                <FieldForm
+                  label={t("inviteCode")}
+                  name="inviteCode"
+                  type="text"
+                  required
+                  errorMessage={errors.inviteCode?.message}
+                  placeholder={t("inviteCodePlaceholder")}
+                  onChange={() => setInvalidInviteCode(false)}
+                  validate={(value) => {
+                    if (value.length !== 6) {
+                      return t("invalidInviteCode");
+                    }
+                    return true;
+                  }}
+                />
               </Flex>
+
+              {invalidInviteCode ? (
+                <Callout.Root color="red" mb="3">
+                  <Callout.Icon>
+                    <OctagonAlert />
+                  </Callout.Icon>
+                  <Callout.Text>{t("invalidInviteCode")}</Callout.Text>
+                </Callout.Root>
+              ) : null}
 
               <Flex
                 justify="center"

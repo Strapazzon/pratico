@@ -28,7 +28,10 @@
     "passwordValidation": "Password must be at least 6 characters",
     "confirmPasswordValidation": "Passwords must match",
     "register": "Register",
-    "login": "Already have an account? Login"
+    "login": "Already have an account? Login",
+    "inviteCode": "Invite Code",
+    "inviteCodePlaceholder": "XXXXXX",
+    "invalidInviteCode": "Invalid invite code"
   },
   "login": {
     "title": "Login",
@@ -39,7 +42,8 @@
     "login": "Login",
     "register": "Don't have an account? Register",
     "forgotPassword": "Forgot Password?",
-    "invalidCredentials": "Invalid credentials"
+    "invalidCredentials": "Invalid credentials",
+    "invalidInviteCode": "Invalid invite code"
   },
   "dialogEmailAlreadyRegistered": {
     "title": "Email already registered",

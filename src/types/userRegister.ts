@@ -5,8 +5,13 @@ export interface UserRegister {
   confirmEmail: string;
   password: string;
   confirmPassword: string;
+  inviteCode: string;
 }
 
 export interface RegisterUserServerActionResponse {
-  error?: "passwordsDoNotMatch" | "emailAlreadyExists" | "unknownError";
+  error?:
+    | "passwordsDoNotMatch"
+    | "emailAlreadyExists"
+    | "unknownError"
+    | "invalidInviteCode";
 }

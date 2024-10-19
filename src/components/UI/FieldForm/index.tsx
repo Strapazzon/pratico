@@ -25,6 +25,7 @@ interface FieldFormProps {
   required?: boolean;
   validate?: (value: string) => string | boolean;
   errorMessage?: string;
+  onChange?: (value: string) => void;
 }
 
 export const FieldForm: React.FC<FieldFormProps> = ({
@@ -35,6 +36,7 @@ export const FieldForm: React.FC<FieldFormProps> = ({
   required,
   validate = () => true,
   errorMessage,
+  onChange = () => {},
 }) => {
   const { register } = useFormContext();
   return (
@@ -51,6 +53,7 @@ export const FieldForm: React.FC<FieldFormProps> = ({
         {...register(name, {
           required,
           validate,
+          onChange,
         })}
       />
       {errorMessage && (

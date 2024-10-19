@@ -33,7 +33,7 @@ export const ProfileMenu: React.FC = () => {
         </DropdownMenu.Label>
         <DropdownMenu.Separator />
         <DropdownMenu.Item>{t("profile")}</DropdownMenu.Item>
-        <DropdownMenu.Item>{t("Settings")}</DropdownMenu.Item>
+        <DropdownMenu.Item>{t("settings")}</DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item onClick={logoutHandler}>
           <LogOut />

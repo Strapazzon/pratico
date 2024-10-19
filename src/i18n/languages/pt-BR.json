@@ -28,7 +28,10 @@
     "passwordValidation": "A senha deve conter pelo menos 6 caracteres",
     "confirmPasswordValidation": "As senhas devem ser iguais",
     "register": "Cadastrar-se",
-    "login": "Já possui uma conta? Entrar"
+    "login": "Já possui uma conta? Entrar",
+    "inviteCode": "Código de convite",
+    "inviteCodePlaceholder": "XXXXXX",
+    "invalidInviteCode": "Código de convite inválido"
   },
   "login": {
     "title": "Entrar",
@@ -39,7 +42,8 @@
     "login": "Entrar",
     "register": "Não possui uma conta? Cadastrar-se",
     "forgotPassword": "Esqueceu a senha?",
-    "invalidCredentials": "Credenciais inválidas"
+    "invalidCredentials": "Credenciais inválidas",
+    "invalidInviteCode": "Código de convite inválido"
   },
   "dialogEmailAlreadyRegistered": {
     "title": "E-mail já cadastrado",
