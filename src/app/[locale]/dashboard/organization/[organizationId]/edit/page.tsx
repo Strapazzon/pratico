@@ -1,19 +1,16 @@
 "use client";
-import { FieldForm } from "@components/UI/FieldForm";
-import { FormRow } from "@components/UI/FormRow";
+import { EntityForm } from "@components/EntityForm";
 import { OrganizationEntity } from "@entities/organizationEntity";
 import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
-import { Button, Flex, Heading, Spinner } from "@radix-ui/themes";
 import { refreshTokenServerAction } from "@server-actions/loginServerAction";
 import {
   findOrganizationByIdAction,
   newOrganizationAction,
   updateOrganizationAction,
 } from "@server-actions/organizationActions";
-import { Building2, Save } from "lucide-react";
+import { Building2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { useCallback, useContext } from "react";
-import { FormProvider, useForm } from "react-hook-form";
 
 type NewOrganizationPageProps = {
   params: {
@@ -28,21 +25,11 @@ const NewOrganizationPage: React.FC<NewOrganizationPageProps> = ({
   const t = useTranslations("newOrganization");
   const [isLoading, setIsLoading] = React.useState(false);
   const { refreshUserData } = useContext(AuthLoggedUserContext);
+  const [values, setValues] = React.useState<OrganizationEntity>();
 
   if (organizationId !== "new" && Number.isNaN(Number(organizationId))) {
     throw new Error("Invalid organizationId");
   }
-
-  const form = useForm<OrganizationEntity>({
-    shouldUseNativeValidation: false,
-    disabled: isLoading,
-  });
-
-  const {
-    handleSubmit,
-    formState: { isDirty },
-    reset,
-  } = form;
 
   const createOrganization = useCallback(
     async (data: OrganizationEntity) => {
@@ -63,7 +50,7 @@ const NewOrganizationPage: React.FC<NewOrganizationPageProps> = ({
         data
       );
 
-      reset(updated as unknown as OrganizationEntity);
+      setValues(updated as unknown as OrganizationEntity);
     }
 
     setIsLoading(false);
@@ -79,108 +66,94 @@ const NewOrganizationPage: React.FC<NewOrganizationPageProps> = ({
       Number(organizationId)
     );
     if (organization) {
-      form.reset(organization as unknown as OrganizationEntity);
+      setValues(organization as unknown as OrganizationEntity);
     }
     setIsLoading(false);
-  }, [form, organizationId]);
+  }, [organizationId]);
 
   React.useEffect(() => {
     loadOrganization();
   }, [loadOrganization]);
 
   return (
-    <Flex
-      direction="column"
-      mb="6"
-      px={{
-        initial: "4",
-        lg: "2",
+    <EntityForm<OrganizationEntity>
+      defaultValues={values}
+      formTitle={t("title")}
+      formIcon={<Building2 size="24" />}
+      submitLabel={t("form.save")}
+      configFields={{
+        name: {
+          label: t("form.name"),
+          placeholder: t("form.name"),
+          required: t("form.mandatoryField"),
+          width: "third",
+        },
+        taxNumber: {
+          label: t("form.taxNumber"),
+          placeholder: t("form.taxNumber"),
+          required: t("form.mandatoryField"),
+          width: "third",
+        },
+        email: {
+          label: t("form.email"),
+          placeholder: t("form.email"),
+          required: t("form.mandatoryField"),
+          type: "email",
+          width: "third",
+        },
+        address: {
+          label: t("form.address"),
+          placeholder: t("form.address"),
+          width: "third",
+        },
+        addressNumber: {
+          label: t("form.addressNumber"),
+          placeholder: t("form.addressNumber"),
+          width: "third",
+        },
+        addressComplement: {
+          label: t("form.addressComplement"),
+          placeholder: t("form.addressComplement"),
+          width: "third",
+        },
+        city: {
+          label: t("form.city"),
+          placeholder: t("form.city"),
+          width: "third",
+        },
+        postalCode: {
+          label: t("form.postalCode"),
+          placeholder: t("form.postalCode"),
+          width: "third",
+        },
+        country: {
+          label: t("form.country"),
+          placeholder: t("form.country"),
+          width: "third",
+        },
+        phoneNumber: {
+          label: t("form.phoneNumber"),
+          placeholder: t("form.phoneNumber"),
+          width: "third",
+        },
+        website: {
+          label: t("form.website"),
+          placeholder: t("form.website"),
+          width: "third",
+        },
+        createdAt: {
+          hidden: true,
+        },
+        organizationId: {
+          hidden: true,
+        },
+        userOwnerId: {
+          hidden: true,
+        },
       }}
-    >
-      <Flex gap="2">
-        <Building2 size="24" />
-        <Heading size="6">{t("title")}</Heading>
-      </Flex>
-
-      <FormProvider {...form}>
-        <form onSubmit={handleSubmit(onSubmitHandler)}>
-          <Flex justify="end" mb="4">
-            <Button
-              variant="solid"
-              type="submit"
-              size="3"
-              disabled={isLoading || !isDirty}
-            >
-              <Spinner loading={isLoading}>
-                <Save size="24" />
-              </Spinner>
-              {t("form.save")}
-            </Button>
-          </Flex>
-          <FormRow>
-            <FieldForm
-              label={t("form.name")}
-              name="name"
-              type="text"
-              required={t("form.mandatoryField")}
-            />
-
-            <FieldForm
-              label={t("form.taxNumber")}
-              name="taxNumber"
-              type="text"
-              required={t("form.mandatoryField")}
-            />
-
-            <FieldForm
-              label={t("form.email")}
-              name="email"
-              type="email"
-              required={t("form.mandatoryField")}
-            />
-          </FormRow>
-
-          <FormRow>
-            <FieldForm label={t("form.address")} name="address" type="text" />
-
-            <FieldForm
-              label={t("form.addressNumber")}
-              name="addressNumber"
-              type="text"
-            />
-
-            <FieldForm
-              label={t("form.addressComplement")}
-              name="addressComplement"
-              type="text"
-            />
-          </FormRow>
-          <FormRow>
-            <FieldForm label={t("form.city")} name="city" type="text" />
-            <FieldForm
-              label={t("form.postalCode")}
-              name="postalCode"
-              type="text"
-            />
-            <FieldForm label={t("form.country")} name="country" type="text" />
-          </FormRow>
-          <FormRow>
-            <FieldForm
-              label={t("form.phoneNumber")}
-              name="phoneNumber"
-              type="text"
-              width="third"
-            />
-            <FieldForm
-              label={t("form.website")}
-              name="website"
-              type="text"
-              width="third"
-            />
-          </FormRow>
-        </form>
-      </FormProvider>
-    </Flex>
+      onSubmit={onSubmitHandler}
+      isLoading={isLoading}
+    />
   );
 };
 

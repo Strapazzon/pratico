@@ -18,6 +18,12 @@ button {
   }
 }
 
+input {
+  &[type="date"] {
+    display: block !important;
+  }
+}
+
 :root,
 .light,
 .light-theme {
@@ -158,7 +164,7 @@ button {
       --gray-a11: color(display-p3 0.0431 0 0.0353 / 0.659);
       --gray-a12: color(display-p3 0.0275 0 0.0235 / 0.877);
 
-      --gray-contrast: #f6f3f7;
+      --gray-contrast: #ffffff;
       --gray-surface: color(display-p3 1 1 1 / 80%);
       --gray-indicator: oklch(59.2% 0.0211 333.7);
       --gray-track: oklch(59.2% 0.0211 333.7);

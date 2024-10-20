@@ -82,6 +82,7 @@ const RegisterPage: React.FC = () => {
                   placeholder={t("firstNamePlaceholder")}
                   required
                   errorMessage={errors.firstName?.message}
+                  width="full"
                 />
 
                 <FieldForm
@@ -91,6 +92,7 @@ const RegisterPage: React.FC = () => {
                   type="text"
                   required
                   errorMessage={errors.lastName?.message}
+                  width="full"
                 />
 
                 <FieldForm
@@ -100,6 +102,7 @@ const RegisterPage: React.FC = () => {
                   type="email"
                   required
                   errorMessage={errors.email?.message}
+                  width="full"
                 />
 
                 <FieldForm
@@ -108,6 +111,7 @@ const RegisterPage: React.FC = () => {
                   type="password"
                   required
                   errorMessage={errors.password?.message}
+                  width="full"
                   validate={(value) => {
                     if (value.length < 6) {
                       return t("passwordValidation");
@@ -122,6 +126,7 @@ const RegisterPage: React.FC = () => {
                   type="password"
                   required
                   errorMessage={errors.confirmPassword?.message}
+                  width="full"
                   validate={(value) => {
                     if (value !== form.getValues("password")) {
                       return t("confirmPasswordValidation");
@@ -137,6 +142,7 @@ const RegisterPage: React.FC = () => {
                   required
                   errorMessage={errors.inviteCode?.message}
                   placeholder={t("inviteCodePlaceholder")}
+                  width="full"
                   onChange={() => setInvalidInviteCode(false)}
                   validate={(value) => {
                     if (value.length !== 6) {

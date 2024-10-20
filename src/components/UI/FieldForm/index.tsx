@@ -1,6 +1,7 @@
 import { Box, Text, TextField } from "@radix-ui/themes";
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
+import { Notes } from "../Notes";
 
 type FieldInputType =
   | "date"
@@ -15,10 +16,11 @@ type FieldInputType =
   | "text"
   | "time"
   | "url"
-  | "week";
+  | "week"
+  | "notes";
 
 export interface FieldFormProps {
-  label: string;
+  label?: string;
   name: string;
   placeholder?: string;
   type?: FieldInputType;
@@ -26,7 +28,8 @@ export interface FieldFormProps {
   validate?: (value: string) => string | boolean;
   errorMessage?: string;
   onChange?: (value: string) => void;
-  width?: "full" | "half" | "third" | "quarter";
+  width?: "full" | "half" | "third" | "quarter" | "auto";
+  hidden?: boolean;
 }
 
 export const FieldForm: React.FC<FieldFormProps> = ({
@@ -37,12 +40,17 @@ export const FieldForm: React.FC<FieldFormProps> = ({
   required,
   validate = () => true,
   onChange = () => {},
-  width = "full",
+  width = "third",
+  hidden,
 }) => {
   const {
     register,
     formState: { errors },
   } = useFormContext();
+
+  if (hidden) {
+    return null;
+  }
 
   const errorMessage = errors?.[`${name}`]?.message;
 
@@ -56,10 +64,27 @@ export const FieldForm: React.FC<FieldFormProps> = ({
         return "33.33%";
       case "quarter":
         return "25%";
+      case "auto":
+        return "auto";
       default:
         return "100%";
     }
   };
+
+  if (type === "notes") {
+    return (
+      <Controller
+        {...register(name, {
+          required,
+          validate,
+          onChange,
+        })}
+        render={({ field }) => (
+          <Notes content={field.value} onChange={field.onChange} />
+        )}
+      />
+    );
+  }
 
   return (
     <Box
@@ -69,6 +94,7 @@ export const FieldForm: React.FC<FieldFormProps> = ({
         md: getWidth(),
       }}
       px="1"
+      pb="3"
     >
       <Text as="div" size="2" mb="1" weight="bold">
         {label}

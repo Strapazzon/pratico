@@ -62,7 +62,27 @@
     "description": "Clinic management system to manage customers, services, work orders and anamneses."
   },
   "customers": {
-    "addCustomer": "New Customer"
+    "addCustomer": "New Customer",
+    "title": "Customers"
+  },
+  "customerEdit": {
+    "formTitle": "Edit Customer",
+    "newCustomer": "New Customer",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "E-mail",
+    "address": "Address",
+    "addressComplement": "Address Complement",
+    "addressNumber": "Address Number",
+    "city": "City",
+    "country": "Country",
+    "postalCode": "Postal Code",
+    "phoneNumber": "Phone Number",
+    "birthDate": "Birth Date",
+    "taxNumber": "Tax Number",
+    "notes": "Notes",
+    "mandatoryField": "This field is mandatory",
+    "save": "Save"
   },
   "newOrganization": {
     "title": "Organization",

@@ -70,6 +70,7 @@ const LoginPage: React.FC = () => {
                   placeholder={t("emailPlaceholder")}
                   type="email"
                   required
+                  width="full"
                 />
 
                 <FieldForm
@@ -78,6 +79,7 @@ const LoginPage: React.FC = () => {
                   type="password"
                   required
                   errorMessage={errors.password?.message}
+                  width="full"
                 />
               </Flex>
 

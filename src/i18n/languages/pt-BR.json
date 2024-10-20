@@ -63,7 +63,27 @@
     "description": "Sistema de gestão de clínicas para gerenciar clientes, serviços, ordens de serviço e anamneses."
   },
   "customers": {
-    "addCustomer": "Novo Cliente"
+    "addCustomer": "Novo Cliente",
+    "title": "Clientes"
+  },
+  "customerEdit": {
+    "formTitle": "Editar Cliente",
+    "newCustomer": "Novo Cliente",
+    "firstName": "Nome",
+    "lastName": "Sobrenome",
+    "email": "E-mail",
+    "address": "Endereço",
+    "addressComplement": "Complemento",
+    "addressNumber": "Número",
+    "city": "Cidade",
+    "country": "País",
+    "postalCode": "Código Postal",
+    "phoneNumber": "Telefone",
+    "birthDate": "Data de Nascimento",
+    "taxNumber": "Número de Identificação Fiscal",
+    "notes": "Notas",
+    "mandatoryField": "Este campo é obrigatório",
+    "save": "Salvar"
   },
   "newOrganization": {
     "title": "Empresa",

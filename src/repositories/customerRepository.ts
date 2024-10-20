@@ -1,6 +1,11 @@
 import "server-only";
 
-import { CustomerRow, db, InsertCustomerRow } from "@database";
+import {
+  CustomerRow,
+  db,
+  InsertCustomerRow,
+  UpdateCustomerRow,
+} from "@database";
 
 export async function insertCustomer(
   customer: InsertCustomerRow
@@ -38,6 +43,20 @@ export async function findCustomerById(
   return customer;
 }
 
+export async function findCustomerByIdAndOrganizations(
+  customerId: number,
+  organizationIds: number[]
+): Promise<CustomerRow | undefined> {
+  const customer = await db
+    .selectFrom("customer")
+    .selectAll()
+    .where("customerId", "=", customerId)
+    .where("organizationId", "in", organizationIds)
+    .executeTakeFirst();
+
+  return customer;
+}
+
 export async function findCustomerByQuery(
   query: string
 ): Promise<CustomerRow[]> {
@@ -57,4 +76,18 @@ export async function findCustomerByQuery(
     )
     .execute();
   return customer;
+}
+
+export async function updateCustomer(
+  customerId: number,
+  customer: UpdateCustomerRow
+): Promise<CustomerRow> {
+  const updatedCustomer = await db
+    .updateTable("customer")
+    .set(customer)
+    .where("customerId", "=", customerId)
+    .returningAll()
+    .executeTakeFirstOrThrow();
+
+  return updatedCustomer;
 }

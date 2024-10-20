@@ -2,6 +2,7 @@ import { Generated } from "kysely";
 
 export interface CustomerEntity {
   customerId: Generated<number>;
+  organizationId: number;
   firstName: string;
   lastName: string;
   email: string;
