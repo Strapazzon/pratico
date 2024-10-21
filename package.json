@@ -16,6 +16,8 @@
     "@tiptap/react": "^2.8.0",
     "@tiptap/starter-kit": "^2.8.0",
     "@vercel/postgres-kysely": "^0.10.0",
+    "ag-grid-community": "^32.2.2",
+    "ag-grid-react": "^32.2.2",
     "crypto": "^1.0.1",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.453.0",

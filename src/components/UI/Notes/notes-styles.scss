@@ -4,7 +4,7 @@
   width: 100%;
   background-color: var(--gray-contrast);
   border-radius: var(--radius-3);
-  height: 45rem;
+  height: -webkit-fill-available;
   overflow-y: scroll;
 
   .header {

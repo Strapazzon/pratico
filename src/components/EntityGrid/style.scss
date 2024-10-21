@@ -1,0 +1,31 @@
+@use "~ag-grid-community/styles" as ag;
+
+@include ag.grid-styles(
+  (
+    theme: quartz,
+    borders: false,
+    borders-critical: false,
+  )
+);
+
+.ag-theme-quartz {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  --entity-grid-height: 35rem;
+
+  /* https://www.ag-grid.com/react-data-grid/global-style-customisation-variables/ */
+  --ag-foreground-color: var(--gray-11);
+  --ag-background-color: var(--color-background);
+  --ag-header-background-color: var(--accent-9);
+  --ag-header-foreground-color: var(--gray-contrast);
+  --ag-icon-font-color: var(--gray-contrast);
+  --ag-row-hover-color: var(--accent-4);
+  --ag-active-color: var(--accent-4);
+  --ag-border-radius: var(--radius-2);
+  --ag-card-radius: var(--radius-2);
+  --ag-wrapper-border-radius: var(--radius-2);
+
+  height: var(--entity-grid-height);
+  width: 100%;
+}

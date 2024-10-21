@@ -6,6 +6,7 @@ import { AuthLoggedUserProvider } from "@providers/authLoggedUserProvider";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
+  params: { locale: string };
 };
 
 const DashboardLayout: React.FC<DashboardLayoutProps> = async ({
@@ -13,7 +14,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = async ({
 }) => {
   return (
     <AuthLoggedUserProvider>
-      <Flex direction="column" width="100%">
+      <Flex direction="column">
         <DashboardHeader />
         {children}
       </Flex>

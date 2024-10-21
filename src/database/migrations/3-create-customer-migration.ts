@@ -10,7 +10,7 @@ export async function up(db: Kysely<Database>): Promise<void> {
     )
     .addColumn("firstName", "varchar", (col) => col.notNull())
     .addColumn("lastName", "varchar", (col) => col.notNull())
-    .addColumn("email", "varchar", (col) => col.notNull().unique())
+    .addColumn("email", "varchar", (col) => col.notNull())
     .addColumn("address", "varchar")
     .addColumn("addressComplement", "varchar")
     .addColumn("city", "varchar")

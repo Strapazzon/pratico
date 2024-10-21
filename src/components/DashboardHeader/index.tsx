@@ -6,20 +6,22 @@ import { Flex } from "@radix-ui/themes";
 
 export const DashboardHeader: React.FC = () => {
   return (
-    <Flex
-      justify="between"
-      align="center"
-      py={{
-        initial: "2",
-        lg: "4",
-      }}
-      px={{
-        initial: "2",
-        lg: "0",
-      }}
-    >
-      <DashBoardDropdownMenu />
-      <ProfileMenu />
+    <Flex direction="column">
+      <Flex
+        justify="between"
+        align="center"
+        py={{
+          initial: "2",
+          lg: "4",
+        }}
+        px={{
+          initial: "2",
+          lg: "0",
+        }}
+      >
+        <DashBoardDropdownMenu />
+        <ProfileMenu />
+      </Flex>
     </Flex>
   );
 };

@@ -80,14 +80,92 @@ export async function findCustomerByQuery(
 
 export async function updateCustomer(
   customerId: number,
+  organizationIds: number[],
   customer: UpdateCustomerRow
 ): Promise<CustomerRow> {
   const updatedCustomer = await db
     .updateTable("customer")
     .set(customer)
     .where("customerId", "=", customerId)
+    .where("organizationId", "in", organizationIds)
     .returningAll()
     .executeTakeFirstOrThrow();
 
   return updatedCustomer;
+}
+
+export async function listCustomersByOrganizationIds(
+  organizationIds: number[],
+  page = 1,
+  perPage = 10
+): Promise<CustomerRow[]> {
+  const offset = (page - 1) * perPage;
+
+  const customers = await db
+    .selectFrom("customer")
+    .selectAll()
+    .limit(perPage)
+    .offset(offset)
+    .where("organizationId", "in", organizationIds)
+    .execute();
+
+  return customers;
+}
+
+export async function countCustomersByOrganizationIds(
+  organizationIds: number[]
+): Promise<number> {
+  const { count } = await db
+    .selectFrom("customer")
+    .select(db.fn.count<number>("customerId").as("count"))
+    .where("organizationId", "in", organizationIds)
+    .executeTakeFirstOrThrow();
+
+  return count;
+}
+
+export async function searchCustomersByOrganizationIds(
+  organizationIds: number[],
+  search: string,
+  page = 1,
+  perPage = 10
+) {
+  const offset = (page - 1) * perPage;
+  const searchQuery = `%${search}%`;
+
+  const customers = await db
+    .selectFrom("customer")
+    .selectAll()
+    .limit(perPage)
+    .offset(offset)
+    .where("organizationId", "in", organizationIds)
+    .where((eb) =>
+      eb.or([
+        eb("firstName", "like", searchQuery),
+        eb("lastName", "like", searchQuery),
+        eb("email", "like", searchQuery),
+        eb("phoneNumber", "like", searchQuery),
+        eb("taxNumber", "like", searchQuery),
+      ])
+    )
+    .execute();
+
+  const rowCount = await db
+    .selectFrom("customer")
+    .select(db.fn.count<number>("customerId").as("count"))
+    .where("organizationId", "in", organizationIds)
+    .where((eb) =>
+      eb.or([
+        eb("firstName", "like", searchQuery),
+        eb("lastName", "like", searchQuery),
+        eb("email", "like", searchQuery),
+        eb("phoneNumber", "like", searchQuery),
+        eb("taxNumber", "like", searchQuery),
+      ])
+    )
+    .executeTakeFirstOrThrow();
+
+  const totalPages = Math.ceil(rowCount.count / perPage);
+
+  return { rowCount: rowCount.count, customers, totalPages };
 }
