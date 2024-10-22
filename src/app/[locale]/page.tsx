@@ -1,28 +1,9 @@
+"use client";
 import { Link } from "@i18n/routing";
 import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
 import { TextureBackground } from "@components/UI/TextureBackground";
 import styled from "styled-components";
-
-type HomePageProps = {
-  params: {
-    lang: string;
-  };
-};
-
-export const revalidate = 604800;
-
-export async function generateMetadata(props: HomePageProps) {
-  const t = await getTranslations("seo");
-  const { params } = props;
-  const { lang } = params;
-  return {
-    title: t("title"),
-    description: t("description"),
-    locale: lang,
-  };
-}
 
 const Header = styled.div`
   display: flex;
@@ -35,7 +16,7 @@ const Header = styled.div`
 export default function Home() {
   const t = useTranslations("home");
   return (
-    <Flex direction="column" gap="1" height="100%">
+    <Flex direction="column" gap="1" height="100vh">
       <TextureBackground />
       <Header>
         <Heading mb="2" size="6">

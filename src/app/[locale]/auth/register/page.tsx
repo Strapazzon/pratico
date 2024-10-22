@@ -41,7 +41,7 @@ const RegisterPage: React.FC = () => {
     <Flex
       className="registerForm"
       p="4"
-      height="100%"
+      height="100vh"
       direction="column"
       justify="center"
       align="center"
