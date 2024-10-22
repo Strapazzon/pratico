@@ -1,10 +1,11 @@
 import React from "react";
 import "@radix-ui/themes/styles.css";
 import "@styles/globals.scss";
-import { Container, Theme } from "@radix-ui/themes";
+import { Container, ScrollArea, Theme } from "@radix-ui/themes";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import { Open_Sans } from "next/font/google";
+import StyledComponentsRegistry from "@lib/styles/styledComponentsRegistry";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
@@ -36,7 +37,21 @@ const RootLayout: React.FC<DashboardLayoutProps> = async ({
             grayColor="gray"
             panelBackground="translucent"
           >
-            <Container>{children}</Container>
+            <StyledComponentsRegistry>
+              <ScrollArea
+                type="scroll"
+                scrollbars="vertical"
+                style={{ height: "100vh" }}
+              >
+                <Container
+                  style={{
+                    minHeight: "100vh",
+                  }}
+                >
+                  {children}
+                </Container>
+              </ScrollArea>
+            </StyledComponentsRegistry>
           </Theme>
         </NextIntlClientProvider>
       </body>

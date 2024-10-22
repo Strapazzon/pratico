@@ -23,30 +23,30 @@ export const DashBoardDropdownMenu: React.FC = () => {
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content>
-        <Link href="/dashboard/customers">
-          <DropdownMenu.Item>
+        <DropdownMenu.Item asChild>
+          <Link href="/dashboard/customers">
             <Users />
             <span>{t("clients")}</span>
-          </DropdownMenu.Item>
-        </Link>
-        <Link href="/dashboard/services">
-          <DropdownMenu.Item>
+          </Link>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item asChild>
+          <Link href="/dashboard/services">
             <Briefcase />
             <span>{t("services")}</span>
-          </DropdownMenu.Item>
-        </Link>
-        <Link href="/dashboard/anamnesis">
-          <DropdownMenu.Item>
+          </Link>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item asChild>
+          <Link href="/dashboard/anamnesis">
             <FileText />
             <span>{t("anamnesis")}</span>
-          </DropdownMenu.Item>
-        </Link>
-        <Link href="/dashboard/work-orders">
-          <DropdownMenu.Item>
+          </Link>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item asChild>
+          <Link href="/dashboard/work-orders">
             <ListOrdered />
             <span>{t("workOrders")}</span>
-          </DropdownMenu.Item>
-        </Link>
+          </Link>
+        </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );

@@ -67,7 +67,7 @@
     "title": "Clientes"
   },
   "customerEdit": {
-    "formTitle": "Editar Cliente",
+    "formTitle": "Ficha de Cliente",
     "newCustomer": "Novo Cliente",
     "firstName": "Nome",
     "lastName": "Sobrenome",

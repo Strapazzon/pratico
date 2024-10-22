@@ -10,6 +10,7 @@ import {
   Card,
   Flex,
   Heading,
+  Spinner,
   Text,
 } from "@radix-ui/themes";
 import { loginServerAction } from "@server-actions/loginServerAction";
@@ -28,12 +29,14 @@ const LoginPage: React.FC = () => {
   const t = useTranslations("login");
   const form = useForm<UserLogin>();
   const [loginResp, setLoginResp] = React.useState<LoginServerActionResponse>();
+  const [isLoggingIn, setIsLoggingIn] = React.useState(false);
   const {
     handleSubmit,
     formState: { errors },
   } = form;
 
   const onSubmit = async (data: UserLogin) => {
+    setIsLoggingIn(true);
     const loginResp = await loginServerAction(data.email, data.password);
     setLoginResp(loginResp);
   };
@@ -63,7 +66,7 @@ const LoginPage: React.FC = () => {
           </Flex>
           <FormProvider {...form}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Flex direction="column" gap="2" mb="4">
+              <Flex direction="column" mb="4">
                 <FieldForm
                   label={t("email")}
                   name="email"
@@ -106,16 +109,16 @@ const LoginPage: React.FC = () => {
                 gap="4"
                 mb="3"
               >
-                <Button type="submit" size="3">
+                <Button type="submit" size="3" disabled={isLoggingIn}>
                   {t("login")}
-                  <LogIn size="1rem" />
+                  <Spinner loading={isLoggingIn}>
+                    <LogIn size="1rem" />
+                  </Spinner>
                 </Button>
 
-                <Link href="/auth/register">
-                  <Button variant="ghost" type="button">
-                    {t("register")}
-                  </Button>
-                </Link>
+                <Button variant="ghost" type="button" asChild>
+                  <Link href="/auth/register">{t("register")}</Link>
+                </Button>
               </Flex>
             </form>
           </FormProvider>

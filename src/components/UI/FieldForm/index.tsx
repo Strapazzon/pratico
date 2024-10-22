@@ -79,9 +79,9 @@ export const FieldForm: React.FC<FieldFormProps> = ({
           validate,
           onChange,
         })}
-        render={({ field }) => (
-          <Notes content={field.value} onChange={field.onChange} />
-        )}
+        render={({ field }) => {
+          return <Notes content={field.value} onChange={field.onChange} />;
+        }}
       />
     );
   }

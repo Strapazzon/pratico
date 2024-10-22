@@ -9,7 +9,7 @@ import {
   getCustomersAction,
   searchCustomersAction,
 } from "@server-actions/customerServerActions";
-import { Edit, Plus, UserSquare2 } from "lucide-react";
+import { Edit, Plus, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 const CustomersPage: React.FC = () => {
@@ -54,7 +54,7 @@ const CustomersPage: React.FC = () => {
       }}
     >
       <Flex align="center" gap="2" mb="6">
-        <UserSquare2 size="24" />
+        <Users size="24" />
         <Heading size="6">{t("title")}</Heading>
       </Flex>
 

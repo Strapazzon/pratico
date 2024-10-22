@@ -1,6 +1,7 @@
 "use client";
 import { EntityForm } from "@components/EntityForm";
 import { CustomerEntity } from "@entities/customerEntity";
+import { useRouter } from "@i18n/routing";
 import {
   createCustomerAction,
   getCustomerAction,
@@ -23,6 +24,7 @@ const CustomerEditPage: React.FC<CustomerEditPageProps> = ({
   const t = useTranslations("customerEdit");
   const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState<CustomerEntity>();
+  const router = useRouter();
 
   const isNew = customerId === "new";
 
@@ -38,6 +40,7 @@ const CustomerEditPage: React.FC<CustomerEditPageProps> = ({
     setIsLoading(true);
     if (isNew) {
       await createCustomer(data);
+      router.push("/dashboard/customers");
     } else {
       const updated = await updateCustomerAction(Number(customerId), data);
       setValues(updated as unknown as CustomerEntity);

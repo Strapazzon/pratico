@@ -1,16 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import "./register-style.scss";
-import {
-  Box,
-  Button,
-  Callout,
-  Card,
-  Flex,
-  Heading,
-  Text,
-} from "@radix-ui/themes";
+import { Box, Button, Callout, Flex, Heading, Text } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import { Forward, OctagonAlert } from "lucide-react";
 import { Link } from "@i18n/routing";
@@ -20,6 +11,7 @@ import { UserRegister } from "@types";
 import { registerUserServerAction } from "@server-actions/registerUserServerAction";
 import { TextureBackground } from "@components/UI/TextureBackground";
 import { DialogEmailAlreadyRegistered } from "@components/dialogs/DialogEmailAlreadyRegistered";
+import { CardFullWidth } from "@components/UI/CardFullWidth";
 
 const RegisterPage: React.FC = () => {
   const t = useTranslations("register");
@@ -68,14 +60,14 @@ const RegisterPage: React.FC = () => {
           md: "40%",
         }}
       >
-        <Card className="card">
+        <CardFullWidth>
           <Flex direction="column" gap="2" align="center" my="6">
             <Heading>{t("title")}</Heading>
             <Text>{t("subtitle")}</Text>
           </Flex>
           <FormProvider {...form}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Flex direction="column" gap="2" mb="4">
+              <Flex direction="column" mb="4">
                 <FieldForm
                   label={t("firstName")}
                   name="firstName"
@@ -174,15 +166,13 @@ const RegisterPage: React.FC = () => {
                   <Forward size="1rem" />
                 </Button>
 
-                <Link href="/auth/login">
-                  <Button variant="ghost" type="button">
-                    {t("login")}
-                  </Button>
-                </Link>
+                <Button variant="ghost" type="button" asChild>
+                  <Link href="/auth/login">{t("login")}</Link>
+                </Button>
               </Flex>
             </form>
           </FormProvider>
-        </Card>
+        </CardFullWidth>
       </Box>
     </Flex>
   );

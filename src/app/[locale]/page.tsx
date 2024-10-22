@@ -2,8 +2,8 @@ import { Link } from "@i18n/routing";
 import { Button, Flex, Heading, Text } from "@radix-ui/themes";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
-import "./page.scss";
 import { TextureBackground } from "@components/UI/TextureBackground";
+import styled from "styled-components";
 
 type HomePageProps = {
   params: {
@@ -24,24 +24,32 @@ export async function generateMetadata(props: HomePageProps) {
   };
 }
 
+const Header = styled.div`
+  display: flex;
+  color: var(--accent-10);
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+`;
+
 export default function Home() {
   const t = useTranslations("home");
   return (
     <Flex direction="column" gap="1" height="100%">
       <TextureBackground />
-      <div className="header">
+      <Header>
         <Heading mb="2" size="6">
           {t("appName")}
         </Heading>
         <Flex gap="3">
-          <Link href="/auth/register">
-            <Button variant="outline">{t("register")}</Button>
-          </Link>
-          <Link href="/auth/login">
-            <Button variant="solid">{t("login")}</Button>
-          </Link>
+          <Button variant="outline" asChild>
+            <Link href="/auth/register">{t("register")}</Link>
+          </Button>
+          <Button variant="solid" asChild>
+            <Link href="/auth/login">{t("login")}</Link>
+          </Button>
         </Flex>
-      </div>
+      </Header>
       <Flex
         direction="column"
         gap="1"
