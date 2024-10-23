@@ -32,16 +32,30 @@ export async function findAnamnesisModelByIdAndOrganizationId(
   return anamnesisModel;
 }
 
-export async function listAnamnesisModelsByOrganizationIds(
-  organizationIds: number[]
-): Promise<AnamnesisModelRow[]> {
+export async function listAnamnesisModelsByOrganizationId(
+  organizationId: number,
+  page = 1,
+  perPage = 10
+) {
+  const offset = (page - 1) * perPage;
+
   const anamnesisModels = await db
     .selectFrom("anamnesisModel")
     .selectAll()
-    .where("organizationId", "in", organizationIds)
+    .limit(perPage)
+    .offset(offset)
+    .where("organizationId", "=", organizationId)
     .execute();
 
-  return anamnesisModels;
+  const rowCount = await db
+    .selectFrom("anamnesisModel")
+    .select(db.fn.count<number>("anamnesisModelId").as("count"))
+    .where("organizationId", "=", organizationId)
+    .executeTakeFirstOrThrow();
+
+  const totalPages = Math.ceil(rowCount.count / perPage);
+
+  return { rowCount: rowCount.count, anamnesisModels, totalPages };
 }
 
 export async function updateAnamnesisModel(

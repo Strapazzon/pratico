@@ -76,28 +76,28 @@ const CustomersPage: React.FC = () => {
         }
         colDefs={[
           {
-            headerName: "Name",
+            headerName: t("fieldFullNameLabel"),
             flex: 2,
             valueGetter: ({ data }) => `${data?.firstName} ${data?.lastName}`,
           },
           {
             field: "email",
-            headerName: "Email",
+            headerName: t("fieldEmailLabel"),
             flex: 2,
           },
           {
             field: "phoneNumber",
-            headerName: "Phone",
+            headerName: t("fieldPhoneNumberLabel"),
             flex: 1,
           },
           {
             field: "city",
-            headerName: "City",
+            headerName: t("fieldCityLabel"),
             flex: 0.75,
           },
           {
             field: "country",
-            headerName: "Country",
+            headerName: t("fieldCountryLabel"),
             flex: 0.8,
           },
           {

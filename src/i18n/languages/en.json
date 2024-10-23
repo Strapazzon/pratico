@@ -6,13 +6,14 @@
     "register": "Register",
     "appName": "Prático"
   },
-  "dashboard": {
+  "dashboardMenu": {
     "title": "Dashboard",
     "subtitle": "Welcome to the dashboard",
     "clients": "Customers",
     "services": "Services",
     "workOrders": "Work Orders",
-    "anamnesis": "Anamnesis"
+    "anamnesis": "Anamnesis",
+    "anamnesisModels": "Anamnesis Models"
   },
   "register": {
     "title": "Register",
@@ -63,7 +64,12 @@
   },
   "customers": {
     "addCustomer": "New Customer",
-    "title": "Customers"
+    "title": "Customers",
+    "fieldFullNameLabel": "Full Name",
+    "fieldEmailLabel": "E-mail",
+    "fieldPhoneNumberLabel": "Phone Number",
+    "fieldCityLabel": "City",
+    "fieldCountryLabel": "Country"
   },
   "customerEdit": {
     "formTitle": "Customer Form",
@@ -125,5 +131,23 @@
     "typeText": "Text",
     "options": "Options",
     "delete": "Delete"
+  },
+  "anamnesisModel": {
+    "addAnamnesisModel": "New Anamnesis Model",
+    "title": "Anamnesis Models",
+    "fieldTitleLabel": "Title",
+    "fieldDescriptionLabel": "Description"
+  },
+  "entityGrid": {
+    "searchPlaceholder": "Search",
+    "noRowsToShow": "No rows to show",
+    "loading": "Loading...",
+    "page": "Page",
+    "of": "of",
+    "to": "to",
+    "next": "Next",
+    "last": "Last",
+    "first": "First",
+    "previous": "Previous"
   }
 }

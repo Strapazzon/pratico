@@ -6,13 +6,14 @@
     "register": "Cadastrar-se",
     "appName": "Prático"
   },
-  "dashboard": {
+  "dashboardMenu": {
     "title": "Painel de Controle",
     "subtitle": "Bem-vindo ao painel de controle",
     "clients": "Clientes",
     "services": "Serviços",
     "workOrders": "Ordens de Serviço",
-    "anamnesis": "Anamnese"
+    "anamnesis": "Anamnese",
+    "anamnesisModels": "Modelos de Anamnese"
   },
   "register": {
     "title": "Crie sua conta",
@@ -64,7 +65,12 @@
   },
   "customers": {
     "addCustomer": "Novo Cliente",
-    "title": "Clientes"
+    "title": "Clientes",
+    "fieldFullNameLabel": "Nome Completo",
+    "fieldEmailLabel": "E-mail",
+    "fieldPhoneNumberLabel": "Telefone",
+    "fieldCityLabel": "Cidade",
+    "fieldCountryLabel": "País"
   },
   "customerEdit": {
     "formTitle": "Ficha de Cliente",
@@ -127,5 +133,23 @@
     "typeText": "Texto",
     "options": "Opções",
     "delete": "Excluir"
+  },
+  "anamnesisModel": {
+    "addAnamnesisModel": "Novo Modelo de Anamnese",
+    "title": "Modelos de Anamnese",
+    "fieldTitleLabel": "Título",
+    "fieldDescriptionLabel": "Descrição"
+  },
+  "entityGrid": {
+    "searchPlaceholder": "Pesquisar",
+    "noRowsToShow": "Nenhum dado encontrado",
+    "loading": "Carregando...",
+    "page": "Página",
+    "of": "de",
+    "to": "para",
+    "next": "Próximo",
+    "last": "Último",
+    "first": "Primeiro",
+    "previous": "Anterior"
   }
 }

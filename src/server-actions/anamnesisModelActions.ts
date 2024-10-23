@@ -5,15 +5,17 @@ import { getUserDataFromSession } from "@lib/auth/getUserDataFromSession";
 import {
   findAnamnesisModelByIdAndOrganizationId,
   insertAnamnesisModel,
-  listAnamnesisModelsByOrganizationIds,
+  listAnamnesisModelsByOrganizationId,
   updateAnamnesisModel,
 } from "@repositories/anamnesisModelRepository";
 
-export async function getAnamnesisModelsAction() {
+export async function getAnamnesisModelsAction(page = 1, perPage = 10) {
   const { organizations } = await getUserDataFromSession();
-  const anamnesisModels = (await listAnamnesisModelsByOrganizationIds(
-    organizations
-  )) as unknown as AnamnesisModelEntity[];
+  const anamnesisModels = await listAnamnesisModelsByOrganizationId(
+    organizations[0],
+    page,
+    perPage
+  );
 
   return anamnesisModels;
 }

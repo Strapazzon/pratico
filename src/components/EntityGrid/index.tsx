@@ -12,6 +12,7 @@ import {
   Search,
 } from "lucide-react";
 import useDebounce from "@hooks/useDebounce";
+import { useTranslations } from "next-intl";
 
 type GetRowResponse<E> = {
   rowCount: number;
@@ -30,6 +31,7 @@ interface EntityGridProps<E extends FieldValues> {
   dataSource: EntityGridDataSource<E>;
   paginationPageSize?: number;
   headerRightSlot?: React.ReactElement;
+  disabledSearch?: boolean;
 }
 
 export const EntityGrid = <E extends FieldValues>({
@@ -37,6 +39,7 @@ export const EntityGrid = <E extends FieldValues>({
   dataSource,
   paginationPageSize = 10,
   headerRightSlot,
+  disabledSearch,
 }: EntityGridProps<E>): React.ReactElement => {
   const [rowData, setRowData] = React.useState<E[]>([]);
   const [rowCount, setRowCount] = React.useState(0);
@@ -44,8 +47,11 @@ export const EntityGrid = <E extends FieldValues>({
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState<string>();
   const debouncedSearch = useDebounce(search, 500);
+  const [isLoading, setIsLoading] = useState(false);
+  const t = useTranslations("entityGrid");
 
   const loadFromDataSource = useCallback(async () => {
+    setIsLoading(true);
     const { rowCount, rowData, totalPages } = await dataSource.getRows(
       page,
       paginationPageSize
@@ -53,6 +59,7 @@ export const EntityGrid = <E extends FieldValues>({
     setTotalPages(totalPages);
     setRowCount(rowCount);
     setRowData(rowData);
+    setIsLoading(false);
   }, [dataSource, page, paginationPageSize]);
 
   const nextPage = () => {
@@ -105,21 +112,41 @@ export const EntityGrid = <E extends FieldValues>({
 
   return (
     <div className="ag-theme-quartz">
-      <Flex justify="between">
-        <TextField.Root
-          placeholder="Search the docs…"
-          size="2"
-          mb="3"
-          onChange={(e) => setSearch(e.target.value)}
-        >
-          <TextField.Slot>
-            <Search size="16" />
-          </TextField.Slot>
-        </TextField.Root>
+      <Flex justify="between" pb="3">
+        {disabledSearch ? (
+          <div></div>
+        ) : (
+          <TextField.Root
+            placeholder={t("searchPlaceholder")}
+            size="2"
+            mb="3"
+            onChange={(e) => setSearch(e.target.value)}
+          >
+            <TextField.Slot>
+              <Search size="16" />
+            </TextField.Slot>
+          </TextField.Root>
+        )}
         {headerRightSlot}
       </Flex>
 
-      <AgGridReact<E> rowData={rowData} columnDefs={colDefs} />
+      <AgGridReact<E>
+        localeText={{
+          noRowsToShow: t("noRowsToShow"),
+          loadingOoo: t("loading"),
+          page: t("page"),
+          of: t("of"),
+          to: t("to"),
+          next: t("next"),
+          last: t("last"),
+          first: t("first"),
+          previous: t("previous"),
+          loading: t("loading"),
+        }}
+        loading={isLoading}
+        rowData={rowData}
+        columnDefs={colDefs}
+      />
 
       {!debouncedSearch ? (
         <Flex justify="between" align="center" py="3" gap="5">
