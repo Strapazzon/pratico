@@ -103,5 +103,29 @@
       "mandatoryField": "Este campo é obrigatório",
       "save": "Salvar"
     }
+  },
+  "anamnesisModelEdit": {
+    "formTitle": "Modelo Ficha de Anamnese",
+    "newAnamnesisModel": "Novo modelo Ficha de Anamnese",
+    "name": "Nome",
+    "description": "Descrição",
+    "questions": "Perguntas",
+    "status": "Estado",
+    "mandatoryField": "Este campo é obrigatório",
+    "save": "Salvar"
+  },
+  "anamnesisModelBuilder": {
+    "mandatory": "Obrigatório",
+    "optionalText": "Exibe um campo de texto opcional",
+    "questions": "Perguntas",
+    "type": "Tipo de input",
+    "addQuestion": "Adicionar Pergunta",
+    "typeNumber": "Número",
+    "typeDate": "Data",
+    "typeRadio": "Radio",
+    "typeCheckBox": "Check Box",
+    "typeText": "Texto",
+    "options": "Opções",
+    "delete": "Excluir"
   }
 }

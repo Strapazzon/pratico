@@ -102,5 +102,28 @@
       "mandatoryField": "This field is mandatory",
       "save": "Save"
     }
+  },
+  "anamnesisModelEdit": {
+    "formTitle": "Anamnesis Model Form",
+    "newAnamnesisModel": "New Anamnesis Model",
+    "name": "Name",
+    "description": "Description",
+    "mandatoryField": "This field is mandatory",
+    "status": "Status",
+    "save": "Save"
+  },
+  "anamnesisModelBuilder": {
+    "mandatory": "Required",
+    "optionalText": "Show optional text",
+    "questions": "Questions",
+    "type": "Input type",
+    "addQuestion": "Add Question",
+    "typeNumber": "Number",
+    "typeDate": "Date",
+    "typeRadio": "Radio",
+    "typeCheckBox": "Check Box",
+    "typeText": "Text",
+    "options": "Options",
+    "delete": "Delete"
   }
 }

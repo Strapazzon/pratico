@@ -4,6 +4,7 @@ import { CustomerEntity } from "@entities/customerEntity";
 import { InviteEntity } from "@entities/inviteEntity";
 import { OrganizationEntity } from "@entities/organizationEntity";
 import { UserEntity } from "@entities/userEntity";
+import { AnamnesisModelEntity } from "@entities/anamnesisModelEntity";
 
 // User operations
 export type UserRow = Selectable<UserEntity>;
@@ -23,3 +24,8 @@ export type UpdateInviteRow = Updateable<InviteEntity>;
 export type OrganizationRow = Selectable<OrganizationEntity>;
 export type InsertOrganizationRow = Insertable<OrganizationEntity>;
 export type UpdateOrganizationRow = Updateable<OrganizationEntity>;
+
+// AnamnesisModel operations
+export type AnamnesisModelRow = Selectable<AnamnesisModelEntity>;
+export type InsertAnamnesisModelRow = Insertable<AnamnesisModelEntity>;
+export type UpdateAnamnesisModelRow = Updateable<AnamnesisModelEntity>;

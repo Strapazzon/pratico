@@ -1,5 +1,6 @@
 "use client";
 import { EntityForm } from "@components/EntityForm";
+import { Notes } from "@components/UI/Notes";
 import { CustomerEntity } from "@entities/customerEntity";
 import { useRouter } from "@i18n/routing";
 import {
@@ -124,7 +125,10 @@ const CustomerEditPage: React.FC<CustomerEditPageProps> = ({
         },
         notes: {
           label: t("notes"),
-          type: "notes",
+          type: "component",
+          render: ({ value, onChange }) => (
+            <Notes content={value} onChange={onChange} />
+          ),
         },
         createdAt: {
           hidden: true,

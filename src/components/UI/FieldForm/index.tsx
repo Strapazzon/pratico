@@ -1,7 +1,11 @@
 import { Box, Text, TextField } from "@radix-ui/themes";
-import React from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import { Notes } from "../Notes";
+import React, { ReactElement } from "react";
+import {
+  Controller,
+  ControllerRenderProps,
+  FieldValues,
+  useFormContext,
+} from "react-hook-form";
 
 type FieldInputType =
   | "date"
@@ -17,7 +21,7 @@ type FieldInputType =
   | "time"
   | "url"
   | "week"
-  | "notes";
+  | "component";
 
 export interface FieldFormProps {
   label?: string;
@@ -30,6 +34,8 @@ export interface FieldFormProps {
   onChange?: (value: string) => void;
   width?: "full" | "half" | "third" | "quarter" | "auto";
   hidden?: boolean;
+  render?: (field: ControllerRenderProps<FieldValues, string>) => ReactElement;
+  defaultValue?: string;
 }
 
 export const FieldForm: React.FC<FieldFormProps> = ({
@@ -42,6 +48,8 @@ export const FieldForm: React.FC<FieldFormProps> = ({
   onChange = () => {},
   width = "third",
   hidden,
+  render = () => <></>,
+  defaultValue,
 }) => {
   const {
     register,
@@ -71,7 +79,7 @@ export const FieldForm: React.FC<FieldFormProps> = ({
     }
   };
 
-  if (type === "notes") {
+  if (type === "component") {
     return (
       <Controller
         {...register(name, {
@@ -80,7 +88,7 @@ export const FieldForm: React.FC<FieldFormProps> = ({
           onChange,
         })}
         render={({ field }) => {
-          return <Notes content={field.value} onChange={field.onChange} />;
+          return render(field);
         }}
       />
     );
@@ -108,6 +116,7 @@ export const FieldForm: React.FC<FieldFormProps> = ({
           required,
           validate,
           onChange,
+          value: defaultValue,
         })}
       />
 
