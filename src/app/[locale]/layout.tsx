@@ -58,6 +58,7 @@ const RootLayout: React.FC<DashboardLayoutProps> = async ({
                 style={{ height: "100vh" }}
               >
                 <Container
+                  px="2"
                   style={{
                     minHeight: "100vh",
                   }}

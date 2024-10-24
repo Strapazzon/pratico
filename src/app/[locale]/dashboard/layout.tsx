@@ -3,6 +3,7 @@ import React from "react";
 import { Flex } from "@radix-ui/themes";
 import { DashboardHeader } from "@components/DashboardHeader";
 import { AuthLoggedUserProvider } from "@providers/authLoggedUserProvider";
+import { OrganizationsProvider } from "@providers/organizationsProvider";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
@@ -14,10 +15,12 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = async ({
 }) => {
   return (
     <AuthLoggedUserProvider>
-      <Flex direction="column">
-        <DashboardHeader />
-        {children}
-      </Flex>
+      <OrganizationsProvider>
+        <Flex direction="column">
+          <DashboardHeader />
+          {children}
+        </Flex>
+      </OrganizationsProvider>
     </AuthLoggedUserProvider>
   );
 };

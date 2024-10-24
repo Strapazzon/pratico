@@ -159,5 +159,10 @@
     "address": "Address",
     "taxNumber": "Tax Number",
     "addOrganization": "New Organization"
+  },
+  "welcomePage": {
+    "title": "Welcome!",
+    "subtitle": "We're very happy to have you on board, but now we need some information about your company in order to start using the system.",
+    "next": "Let's go!"
   }
 }

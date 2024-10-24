@@ -7,7 +7,8 @@ export const getUserDataFromSession = async () => {
   try {
     const token = cookies().get("auth-token");
     return await jwtVerifyToken(token?.value);
-  } catch {
+  } catch (error) {
+    console.error("Invalid token", error);
     cookies().delete("auth-token");
     cookies().delete("refresh-token");
     redirect(`/auth/login`);

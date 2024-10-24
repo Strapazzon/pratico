@@ -39,6 +39,7 @@ const LoginPage: React.FC = () => {
     setIsLoggingIn(true);
     const loginResp = await loginServerAction(data.email, data.password);
     setLoginResp(loginResp);
+    setIsLoggingIn(false);
   };
 
   return (

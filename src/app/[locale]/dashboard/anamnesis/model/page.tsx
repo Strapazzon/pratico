@@ -12,7 +12,11 @@ const AnamnesisModelPage: React.FC = () => {
   const t = useTranslations("anamnesisModel");
 
   const dataSource: EntityGridDataSource<AnamnesisModelEntity> = {
-    getRows: async (page: number, perPage: number, organizationId: number) => {
+    getRows: async (page: number, perPage: number, organizationId?: number) => {
+      if (!organizationId) {
+        throw new Error("OrganizationId is required");
+      }
+
       const { anamnesisModels, rowCount, totalPages } =
         await getAnamnesisModelsAction(page, perPage, organizationId);
 

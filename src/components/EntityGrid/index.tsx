@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import useDebounce from "@hooks/useDebounce";
 import { useTranslations } from "next-intl";
-import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
+import { OrganizationsContext } from "@providers/organizationsProvider";
 
 type GetRowResponse<E> = {
   rowCount: number;
@@ -25,7 +25,7 @@ export interface EntityGridDataSource<E> {
   getRows: (
     page: number,
     perPage: number,
-    organizationId: number
+    organizationId?: number
   ) => Promise<GetRowResponse<E>>;
   searchRows?: (search: string) => Promise<GetRowResponse<E>>;
 }
@@ -56,10 +56,10 @@ export const EntityGrid = <E extends FieldValues>({
   const [search, setSearch] = useState<string>();
   const debouncedSearch = useDebounce(search, 500);
   const [isLoading, setIsLoading] = useState(false);
-  const { selectedOrganizationId } = useContext(AuthLoggedUserContext);
+  const { organizationId } = useContext(OrganizationsContext);
 
   const loadFromDataSource = useCallback(
-    async (organizationId: number) => {
+    async (organizationId?: number) => {
       setIsLoading(true);
       const { rowCount, rowData, totalPages } = await dataSource.getRows(
         page,
@@ -77,25 +77,25 @@ export const EntityGrid = <E extends FieldValues>({
   const nextPage = () => {
     if (page < totalPages) {
       setPage(page + 1);
-      loadFromDataSource(selectedOrganizationId);
+      loadFromDataSource(Number(organizationId));
     }
   };
 
   const prevPage = () => {
     if (page > 1) {
       setPage(page - 1);
-      loadFromDataSource(selectedOrganizationId);
+      loadFromDataSource(Number(organizationId));
     }
   };
 
   const goToFirstPage = () => {
     setPage(1);
-    loadFromDataSource(selectedOrganizationId);
+    loadFromDataSource(Number(organizationId));
   };
 
   const goToLastPage = () => {
     setPage(totalPages);
-    loadFromDataSource(selectedOrganizationId);
+    loadFromDataSource(Number(organizationId));
   };
 
   const rowStart = (page - 1) * paginationPageSize + 1;
@@ -117,20 +117,14 @@ export const EntityGrid = <E extends FieldValues>({
   const fetchData = useCallback(() => {
     if (debouncedSearch) {
       searchRows();
-    } else if (!rowData) {
-      loadFromDataSource(selectedOrganizationId);
+    } else {
+      loadFromDataSource(Number(organizationId));
     }
-  }, [
-    debouncedSearch,
-    loadFromDataSource,
-    rowData,
-    searchRows,
-    selectedOrganizationId,
-  ]);
+  }, [debouncedSearch, loadFromDataSource, organizationId, searchRows]);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, [fetchData, organizationId]);
 
   return (
     <div className="ag-theme-quartz">

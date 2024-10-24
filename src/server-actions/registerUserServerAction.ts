@@ -66,5 +66,5 @@ export async function registerUserServerAction(
 
   setAuthCookies(token, refreshToken);
 
-  return redirect(`/dashboard`);
+  return redirect(`/welcome`);
 }

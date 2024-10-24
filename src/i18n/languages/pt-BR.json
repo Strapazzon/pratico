@@ -161,5 +161,10 @@
     "country": "País",
     "taxNumber": "Identificação Fiscal",
     "addOrganization": "Nova Empresa"
+  },
+  "welcomePage": {
+    "title": "Bem-vindo!",
+    "subtitle": "Estamos muito felizes de ter voce abordo, agora precisamos de algumas informações sobre sua empresa para começar a usar o sistema.",
+    "next": "Começar"
   }
 }

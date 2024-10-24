@@ -17,7 +17,11 @@ const CustomersPage: React.FC = () => {
 
   const dataSource: EntityGridDataSource<CustomerEntity> = {
     getRows: useCallback(
-      async (page: number, perPage: number, organizationId: number) => {
+      async (page: number, perPage: number, organizationId?: number) => {
+        if (!organizationId) {
+          throw new Error("OrganizationId is required");
+        }
+
         const { customers, totalCount, totalPages } = await getCustomersAction(
           page,
           perPage,

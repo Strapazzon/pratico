@@ -3,7 +3,7 @@ import { EntityForm } from "@components/EntityForm";
 import { Notes } from "@components/UI/Notes";
 import { CustomerEntity } from "@entities/customerEntity";
 import { useRouter } from "@i18n/routing";
-import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
+import { OrganizationsContext } from "@providers/organizationsProvider";
 import {
   createCustomerAction,
   getCustomerAction,
@@ -26,7 +26,7 @@ const CustomerEditPage: React.FC<CustomerEditPageProps> = ({
   const t = useTranslations("customerEdit");
   const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState<CustomerEntity>();
-  const { selectedOrganizationId } = useContext(AuthLoggedUserContext);
+  const { organizationId } = useContext(OrganizationsContext);
   const router = useRouter();
 
   const isNew = customerId === "new";
@@ -36,7 +36,11 @@ const CustomerEditPage: React.FC<CustomerEditPageProps> = ({
   }
 
   const createCustomer = async (data: CustomerEntity) => {
-    await createCustomerAction(data, selectedOrganizationId);
+    if (!organizationId) {
+      throw new Error("OrganizationId not found");
+    }
+
+    await createCustomerAction(data, organizationId);
   };
 
   const onSubmitHandler = async (data: CustomerEntity) => {
@@ -55,13 +59,17 @@ const CustomerEditPage: React.FC<CustomerEditPageProps> = ({
 
   const loadCustomer = useCallback(async () => {
     setIsLoading(true);
+    if (!organizationId) {
+      throw new Error("OrganizationId not found");
+    }
+
     const customer = await getCustomerAction(
       Number(customerId),
-      selectedOrganizationId
+      organizationId
     );
     setValues(customer as unknown as CustomerEntity);
     setIsLoading(false);
-  }, [customerId, selectedOrganizationId]);
+  }, [customerId, organizationId]);
 
   useEffect(() => {
     if (!isNew) {

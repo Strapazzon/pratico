@@ -3,6 +3,7 @@ import { EntityForm } from "@components/EntityForm";
 import { OrganizationEntity } from "@entities/organizationEntity";
 import { useRouter } from "@i18n/routing";
 import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
+import { OrganizationsContext } from "@providers/organizationsProvider";
 import { refreshTokenServerAction } from "@server-actions/loginServerAction";
 import {
   findOrganizationByIdAction,
@@ -26,6 +27,7 @@ const NewOrganizationPage: React.FC<NewOrganizationPageProps> = ({
   const t = useTranslations("newOrganization");
   const [isLoading, setIsLoading] = React.useState(false);
   const { refreshUserData } = useContext(AuthLoggedUserContext);
+  const { refreshOrganizations } = useContext(OrganizationsContext);
   const [values, setValues] = React.useState<OrganizationEntity>();
   const router = useRouter();
 
@@ -35,12 +37,13 @@ const NewOrganizationPage: React.FC<NewOrganizationPageProps> = ({
 
   const createOrganization = useCallback(
     async (data: OrganizationEntity) => {
-      const newOrg = await newOrganizationAction(data);
+      await newOrganizationAction(data);
       await refreshTokenServerAction();
       await refreshUserData();
-      router.push(`/dashboard/organizations/${newOrg.organizationId}/edit`);
+      await refreshOrganizations();
+      router.push(`/dashboard`);
     },
-    [refreshUserData, router]
+    [refreshOrganizations, refreshUserData, router]
   );
 
   const onSubmitHandler = async (data: OrganizationEntity) => {

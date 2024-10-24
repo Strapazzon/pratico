@@ -2,7 +2,7 @@
 import { AnamnesisModelBuilder } from "@components/AnamnesisModelBuilder";
 import { EntityForm } from "@components/EntityForm";
 import { AnamnesisModelEntity } from "@entities/anamnesisModelEntity";
-import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
+import { OrganizationsContext } from "@providers/organizationsProvider";
 import {
   addAnamnesisModelAction,
   updateAnamnesisModelAction,
@@ -23,33 +23,37 @@ const AnamnesisModelPage: React.FC<AnamnesisModelPageProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState<AnamnesisModelEntity>();
-  const { selectedOrganizationId } = useContext(AuthLoggedUserContext);
+  const { organizationId } = useContext(OrganizationsContext);
   const t = useTranslations("anamnesisModelEdit");
   const isNew = id === "new";
 
   const onSubmitHandler = useCallback(
     async (data: AnamnesisModelEntity) => {
       setIsLoading(true);
-      if (isNew && selectedOrganizationId) {
-        await addAnamnesisModelAction(data, selectedOrganizationId);
+      if (isNew && organizationId) {
+        await addAnamnesisModelAction(data, organizationId);
       } else {
         await updateAnamnesisModelAction(Number(id), data);
       }
       setIsLoading(false);
     },
-    [id, isNew, selectedOrganizationId]
+    [id, isNew, organizationId]
   );
 
   const loadAnamnesisModel = useCallback(async () => {
     setIsLoading(true);
 
+    if (!organizationId) {
+      return;
+    }
+
     const anamnesisModel = await getAnamnesisModelAction(
       Number(id),
-      selectedOrganizationId
+      organizationId
     );
     setValues(anamnesisModel as unknown as AnamnesisModelEntity);
     setIsLoading(false);
-  }, [id, selectedOrganizationId]);
+  }, [id, organizationId]);
 
   if (!isNew && Number.isNaN(Number(id))) {
     throw new Error("Invalid anamnesisModelId");

@@ -1,25 +1,29 @@
-import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
+import { OrganizationsContext } from "@providers/organizationsProvider";
 import { Flex, Select, Text } from "@radix-ui/themes";
 import { Building2 } from "lucide-react";
 import React, { useContext } from "react";
 
 export const OrganizationSelector: React.FC = () => {
-  const { selectedOrganizationId, organizations, setSelectedOrganizationId } =
-    useContext(AuthLoggedUserContext);
+  const { setOrganizationId, organization, listOfOrganizations } =
+    useContext(OrganizationsContext);
 
   const handleOrganizationChange = (organizationId: string) => {
-    setSelectedOrganizationId(Number(organizationId));
+    setOrganizationId(Number(organizationId));
   };
+
+  if (!listOfOrganizations || listOfOrganizations.length === 1) {
+    return null;
+  }
 
   return (
     <Select.Root
-      value={selectedOrganizationId.toString()}
+      value={organization?.organizationId.toString()}
       onValueChange={handleOrganizationChange}
       size="3"
     >
       <Select.Trigger></Select.Trigger>
       <Select.Content>
-        {organizations?.map((organization, index) => (
+        {listOfOrganizations?.map((organization, index) => (
           <Select.Item
             key={index}
             value={organization.organizationId.toString()}

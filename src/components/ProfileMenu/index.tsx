@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "@i18n/routing";
+import { BrowserStorage } from "@lib/localStorage/localStorage";
 import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
 import { Avatar, DropdownMenu, Flex, Heading, Text } from "@radix-ui/themes";
 import { logoutServerAction } from "@server-actions/logoutServerAction";
@@ -14,6 +15,7 @@ export const ProfileMenu: React.FC = () => {
   const router = useRouter();
 
   const logoutHandler = () => {
+    BrowserStorage.clear();
     logoutServerAction();
   };
 
