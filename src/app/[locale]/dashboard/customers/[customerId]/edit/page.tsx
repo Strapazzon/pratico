@@ -3,6 +3,7 @@ import { EntityForm } from "@components/EntityForm";
 import { Notes } from "@components/UI/Notes";
 import { CustomerEntity } from "@entities/customerEntity";
 import { useRouter } from "@i18n/routing";
+import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
 import {
   createCustomerAction,
   getCustomerAction,
@@ -10,7 +11,7 @@ import {
 } from "@server-actions/customerServerActions";
 import { UserPen, UserPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 
 type CustomerEditPageProps = {
   params: {
@@ -25,6 +26,7 @@ const CustomerEditPage: React.FC<CustomerEditPageProps> = ({
   const t = useTranslations("customerEdit");
   const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState<CustomerEntity>();
+  const { selectedOrganizationId } = useContext(AuthLoggedUserContext);
   const router = useRouter();
 
   const isNew = customerId === "new";
@@ -34,7 +36,7 @@ const CustomerEditPage: React.FC<CustomerEditPageProps> = ({
   }
 
   const createCustomer = async (data: CustomerEntity) => {
-    await createCustomerAction(data);
+    await createCustomerAction(data, selectedOrganizationId);
   };
 
   const onSubmitHandler = async (data: CustomerEntity) => {
@@ -53,10 +55,13 @@ const CustomerEditPage: React.FC<CustomerEditPageProps> = ({
 
   const loadCustomer = useCallback(async () => {
     setIsLoading(true);
-    const customer = await getCustomerAction(Number(customerId));
+    const customer = await getCustomerAction(
+      Number(customerId),
+      selectedOrganizationId
+    );
     setValues(customer as unknown as CustomerEntity);
     setIsLoading(false);
-  }, [customerId]);
+  }, [customerId, selectedOrganizationId]);
 
   useEffect(() => {
     if (!isNew) {

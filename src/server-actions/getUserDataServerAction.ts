@@ -1,6 +1,6 @@
 "use server";
 
-import { getUserDataFromSession } from "@lib/auth/getUserDataFromSession";
+import { getUserDataFromSession } from "@server-actions/getUserDataFromSessionAction";
 
 export async function getUserDataServerAction() {
   return getUserDataFromSession();

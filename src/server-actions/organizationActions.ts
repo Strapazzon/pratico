@@ -6,7 +6,7 @@ import {
   UpdateOrganizationRow,
 } from "@database";
 import { OrganizationEntity } from "@entities/organizationEntity";
-import { getUserDataFromSession } from "@lib/auth/getUserDataFromSession";
+import { getUserDataFromSession } from "@server-actions/getUserDataFromSessionAction";
 import {
   findOrganizationByIdAndUserOwnerId,
   insertOrganization,

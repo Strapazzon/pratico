@@ -1,12 +1,14 @@
 "use client";
 import { JwtTokenData } from "@lib/auth/jwt";
 import { getUserDataServerAction } from "@server-actions/getUserDataServerAction";
-import React, { createContext, useCallback, useEffect } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 
 type AuthLoggedUserContextProps = {
   userData?: JwtTokenData | null;
   userNameInitials?: string;
   refreshUserData: () => void;
+  selectedOrganizationId: number;
+  setSelectedOrganizationId: (id: number) => void;
 };
 
 type AuthLoggedUserProviderProps = {
@@ -20,11 +22,12 @@ export const AuthLoggedUserContext = createContext<AuthLoggedUserContextProps>(
 export const AuthLoggedUserProvider: React.FC<AuthLoggedUserProviderProps> = ({
   children,
 }) => {
-  const [userData, setUserData] = React.useState<
-    JwtTokenData | undefined | null
-  >();
+  const [userData, setUserData] = useState<JwtTokenData | undefined | null>();
 
-  const [userNameInitials, setUserNameInitials] = React.useState<string>();
+  const [userNameInitials, setUserNameInitials] = useState<string>();
+  const [selectedOrganizationId, setSelectedOrganizationId] = useState<number>(
+    userData?.organizations[0] ?? -1
+  );
 
   const getUserNameInitials = useCallback((data?: JwtTokenData) => {
     if (!data) {
@@ -39,6 +42,7 @@ export const AuthLoggedUserProvider: React.FC<AuthLoggedUserProviderProps> = ({
     setUserData(data);
     if (data) {
       setUserNameInitials(getUserNameInitials(data));
+      setSelectedOrganizationId(data.organizations[0]);
     }
   }, [getUserNameInitials]);
 
@@ -46,13 +50,30 @@ export const AuthLoggedUserProvider: React.FC<AuthLoggedUserProviderProps> = ({
     await fetchUserData();
   }, [fetchUserData]);
 
+  const setOrganizationIdHandler = useCallback(
+    (id: number) => {
+      if (userData?.organizations?.indexOf(id) === -1) {
+        return;
+      }
+
+      setSelectedOrganizationId(id);
+    },
+    [userData?.organizations]
+  );
+
   useEffect(() => {
     fetchUserData();
-  }, [fetchUserData]);
+  }, [fetchUserData, selectedOrganizationId]);
 
   return (
     <AuthLoggedUserContext.Provider
-      value={{ userData, userNameInitials, refreshUserData }}
+      value={{
+        userData,
+        userNameInitials,
+        refreshUserData,
+        selectedOrganizationId,
+        setSelectedOrganizationId: setOrganizationIdHandler,
+      }}
     >
       {children}
     </AuthLoggedUserContext.Provider>

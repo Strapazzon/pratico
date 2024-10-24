@@ -1,3 +1,4 @@
+import "server-only";
 import jwt from "jsonwebtoken";
 import { generateHashSha512 } from "./cryptographic";
 

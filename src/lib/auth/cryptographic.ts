@@ -1,3 +1,4 @@
+import "server-only";
 import * as crypto from "crypto";
 
 const saltSize = Number(process.env.AUTH_SALT_SIZE ?? 16);

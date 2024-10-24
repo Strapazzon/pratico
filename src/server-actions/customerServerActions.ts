@@ -1,7 +1,7 @@
 "use server";
 import { InsertCustomerRow } from "@database";
 import { CustomerEntity } from "@entities/customerEntity";
-import { getUserDataFromSession } from "@lib/auth/getUserDataFromSession";
+import { getUserDataFromSession } from "@server-actions/getUserDataFromSessionAction";
 import {
   countCustomersByOrganizationIds,
   findCustomerByIdAndOrganizations,
@@ -10,17 +10,19 @@ import {
   searchCustomersByOrganizationIds,
   updateCustomer,
 } from "@repositories/customerRepository";
+import { validateUserOrganizationRights } from "@lib/auth/validateUserOrganizationRights";
 
 export async function createCustomerAction(
-  data: CustomerEntity
+  data: CustomerEntity,
+  organizationId: number
 ): Promise<InsertCustomerRow> {
-  const { organizations } = await getUserDataFromSession();
+  validateUserOrganizationRights(organizationId);
 
   return await insertCustomer({
     ...data,
     customerId: undefined,
     createdAt: undefined,
-    organizationId: organizations[0],
+    organizationId,
   } as unknown as InsertCustomerRow);
 }
 
@@ -37,9 +39,13 @@ export async function updateCustomerAction(
   } as unknown as InsertCustomerRow);
 }
 
-export async function getCustomerAction(customerId: number) {
-  const { organizations } = await getUserDataFromSession();
-  return await findCustomerByIdAndOrganizations(customerId, organizations);
+export async function getCustomerAction(
+  customerId: number,
+  organizationId: number
+) {
+  validateUserOrganizationRights(organizationId);
+
+  return await findCustomerByIdAndOrganizations(customerId, [organizationId]);
 }
 
 export async function getCustomersAction(page = 1, perPage = 10) {

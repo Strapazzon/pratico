@@ -2,6 +2,7 @@
 import { AnamnesisModelBuilder } from "@components/AnamnesisModelBuilder";
 import { EntityForm } from "@components/EntityForm";
 import { AnamnesisModelEntity } from "@entities/anamnesisModelEntity";
+import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
 import {
   addAnamnesisModelAction,
   updateAnamnesisModelAction,
@@ -9,7 +10,7 @@ import {
 } from "@server-actions/anamnesisModelActions";
 import { FileBox } from "lucide-react";
 import { useTranslations } from "next-intl";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 
 type AnamnesisModelPageProps = {
   params: {
@@ -22,28 +23,33 @@ const AnamnesisModelPage: React.FC<AnamnesisModelPageProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [values, setValues] = useState<AnamnesisModelEntity>();
+  const { selectedOrganizationId } = useContext(AuthLoggedUserContext);
   const t = useTranslations("anamnesisModelEdit");
   const isNew = id === "new";
 
   const onSubmitHandler = useCallback(
     async (data: AnamnesisModelEntity) => {
       setIsLoading(true);
-      if (isNew) {
-        await addAnamnesisModelAction(data);
+      if (isNew && selectedOrganizationId) {
+        await addAnamnesisModelAction(data, selectedOrganizationId);
       } else {
         await updateAnamnesisModelAction(Number(id), data);
       }
       setIsLoading(false);
     },
-    [id, isNew]
+    [id, isNew, selectedOrganizationId]
   );
 
   const loadAnamnesisModel = useCallback(async () => {
     setIsLoading(true);
-    const anamnesisModel = await getAnamnesisModelAction(Number(id));
+    console.log("id", id, "selectedOrganizationId", selectedOrganizationId);
+    const anamnesisModel = await getAnamnesisModelAction(
+      Number(id),
+      selectedOrganizationId
+    );
     setValues(anamnesisModel as unknown as AnamnesisModelEntity);
     setIsLoading(false);
-  }, [id]);
+  }, [id, selectedOrganizationId]);
 
   if (!isNew && Number.isNaN(Number(id))) {
     throw new Error("Invalid anamnesisModelId");

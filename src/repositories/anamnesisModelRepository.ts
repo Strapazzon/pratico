@@ -20,13 +20,13 @@ export async function insertAnamnesisModel(
 
 export async function findAnamnesisModelByIdAndOrganizationId(
   id: number,
-  organizationIds: number[]
+  organizationId: number
 ): Promise<AnamnesisModelRow | undefined> {
   const anamnesisModel = await db
     .selectFrom("anamnesisModel")
     .selectAll()
     .where("anamnesisModelId", "=", id)
-    .where("organizationId", "in", organizationIds)
+    .where("organizationId", "=", organizationId)
     .executeTakeFirst();
 
   return anamnesisModel;

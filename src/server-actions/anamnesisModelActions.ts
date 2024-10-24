@@ -1,13 +1,14 @@
 "use server";
 import { InsertAnamnesisModelRow } from "@database";
 import { AnamnesisModelEntity } from "@entities/anamnesisModelEntity";
-import { getUserDataFromSession } from "@lib/auth/getUserDataFromSession";
+import { getUserDataFromSession } from "@server-actions/getUserDataFromSessionAction";
 import {
   findAnamnesisModelByIdAndOrganizationId,
   insertAnamnesisModel,
   listAnamnesisModelsByOrganizationId,
   updateAnamnesisModel,
 } from "@repositories/anamnesisModelRepository";
+import { validateUserOrganizationRights } from "@lib/auth/validateUserOrganizationRights";
 
 export async function getAnamnesisModelsAction(page = 1, perPage = 10) {
   const { organizations } = await getUserDataFromSession();
@@ -20,23 +21,36 @@ export async function getAnamnesisModelsAction(page = 1, perPage = 10) {
   return anamnesisModels;
 }
 
-export async function getAnamnesisModelAction(anamnesisModelId: number) {
-  const { organizations } = await getUserDataFromSession();
+export async function getAnamnesisModelAction(
+  anamnesisModelId: number,
+  organizationId: number
+) {
+  console.log(
+    "anamnesisModelId",
+    anamnesisModelId,
+    "organizationId",
+    organizationId
+  );
+  validateUserOrganizationRights(organizationId);
+
   const anamnesisModel = await findAnamnesisModelByIdAndOrganizationId(
     anamnesisModelId,
-    organizations
+    organizationId
   );
 
   return anamnesisModel;
 }
 
-export async function addAnamnesisModelAction(data: AnamnesisModelEntity) {
-  const { organizations } = await getUserDataFromSession();
+export async function addAnamnesisModelAction(
+  data: AnamnesisModelEntity,
+  organizationId: number
+) {
+  validateUserOrganizationRights(organizationId);
 
   const insertedAnamnesis = await insertAnamnesisModel({
     ...data,
     anamnesisModelId: undefined,
-    organizationId: organizations[0],
+    organizationId,
     status: "active",
   } as unknown as InsertAnamnesisModelRow);
 
