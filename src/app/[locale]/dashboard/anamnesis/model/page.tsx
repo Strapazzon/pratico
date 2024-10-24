@@ -68,7 +68,7 @@ const AnamnesisModelPage: React.FC = () => {
             flex: 2,
           },
           {
-            flex: 0.3,
+            flex: 0.5,
             cellRenderer: ({ data }: { data: AnamnesisModelEntity }) => (
               <Flex justify="end" align="center" height="100%">
                 <Button variant="ghost" asChild>

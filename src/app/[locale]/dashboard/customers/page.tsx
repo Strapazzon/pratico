@@ -101,7 +101,7 @@ const CustomersPage: React.FC = () => {
             flex: 0.8,
           },
           {
-            flex: 0.3,
+            flex: 0.5,
             cellRenderer: ({ data }: { data: CustomerEntity }) => (
               <Flex justify="end" align="center" height="100%">
                 <Button variant="ghost" asChild>

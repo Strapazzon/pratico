@@ -1,15 +1,10 @@
 import { DraggableItem } from "@components/UI/DraggableItem";
+import { FieldForm } from "@components/UI/FieldForm";
+import { FormCheckbox } from "@components/UI/FormCheckbox";
+import { FormSelect } from "@components/UI/FormSelect";
 import { InputTags } from "@components/UI/InputTags";
 import { AnamnesisModelEntity } from "@entities/anamnesisModelEntity";
-import {
-  Checkbox,
-  Flex,
-  TextField,
-  Text,
-  Button,
-  Select,
-  Heading,
-} from "@radix-ui/themes";
+import { Flex, Text, Button, Heading } from "@radix-ui/themes";
 import { GripVertical, Plus, Trash } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React from "react";
@@ -47,7 +42,7 @@ type FormData = AnamnesisModelEntity & {
   }[];
 };
 
-export const AnamnesisModelBuilder: React.FC = ({}) => {
+export const AnamnesisModelBuilder = ({}) => {
   const t = useTranslations("anamnesisModelBuilder");
   const { register, control, watch } = useFormContext<FormData>();
 
@@ -76,26 +71,16 @@ export const AnamnesisModelBuilder: React.FC = ({}) => {
           >
             <Flex>
               <Flex direction="column" gap="4">
-                <GripVertical />
+                <GripVertical scale="3" />
               </Flex>
               <QuestionCard>
-                <Flex gap="2">
-                  <Flex
-                    direction="column"
-                    width={{
-                      initial: "100%",
-                    }}
-                  >
-                    <Text as="div" size="2" mb="1" weight="bold">
-                      {index + 1}
-                    </Text>
-                    <TextField.Root
-                      type="text"
-                      {...register(`questions.${index}.question` as const)}
-                      defaultValue={question.question}
-                    />
-                  </Flex>
-                </Flex>
+                <FieldForm
+                  label={`${index + 1}`}
+                  name={`questions.${index}.question`}
+                  defaultValue={question.question}
+                  width="full"
+                />
+
                 <Flex
                   gap="3"
                   direction={{
@@ -110,38 +95,21 @@ export const AnamnesisModelBuilder: React.FC = ({}) => {
                       sm: "20%",
                     }}
                   >
-                    <Text as="div" size="2" mb="1" weight="bold">
-                      {t("type")}
-                    </Text>
-
                     <Controller
-                      {...register(`questions.${index}.type`, {
-                        value: question.type,
-                      })}
+                      {...register(`questions.${index}.type`)}
                       render={({ field }) => (
-                        <Select.Root
-                          value={field.value}
+                        <FormSelect
+                          label={t("type")}
+                          options={[
+                            { label: t("typeText"), value: "text" },
+                            { label: t("typeNumber"), value: "number" },
+                            { label: t("typeDate"), value: "date" },
+                            { label: t("typeRadio"), value: "radio" },
+                            { label: t("typeCheckBox"), value: "checkbox" },
+                          ]}
+                          defaultValue={field.value}
                           onValueChange={field.onChange}
-                        >
-                          <Select.Trigger />
-                          <Select.Content>
-                            <Select.Item value="text">
-                              {t("typeText")}
-                            </Select.Item>
-                            <Select.Item value="number">
-                              {t("typeNumber")}
-                            </Select.Item>
-                            <Select.Item value="date">
-                              {t("typeDate")}
-                            </Select.Item>
-                            <Select.Item value="radio">
-                              {t("typeRadio")}
-                            </Select.Item>
-                            <Select.Item value="checkbox">
-                              {t("typeCheckBox")}
-                            </Select.Item>
-                          </Select.Content>
-                        </Select.Root>
+                        />
                       )}
                     />
                   </Flex>
@@ -161,37 +129,15 @@ export const AnamnesisModelBuilder: React.FC = ({}) => {
                   />
                 </Flex>
                 <Flex gap="3">
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Controller
-                        {...register(`questions.${index}.required` as const)}
-                        render={({ field }) => (
-                          <Checkbox
-                            checked={field.value}
-                            onClick={() => field.onChange(!field.value)}
-                          />
-                        )}
-                      ></Controller>
-                      {t("mandatory")}
-                    </Flex>
-                  </Text>
+                  <FormCheckbox
+                    label={t("mandatory")}
+                    {...register(`questions.${index}.required` as const)}
+                  />
 
-                  <Text as="label" size="2">
-                    <Flex gap="2">
-                      <Controller
-                        {...register(
-                          `questions.${index}.optionalText` as const
-                        )}
-                        render={({ field }) => (
-                          <Checkbox
-                            checked={field.value}
-                            onClick={() => field.onChange(!field.value)}
-                          />
-                        )}
-                      ></Controller>
-                      {t("optionalText")}
-                    </Flex>
-                  </Text>
+                  <FormCheckbox
+                    label={t("optionalText")}
+                    {...register(`questions.${index}.optionalText` as const)}
+                  />
                 </Flex>
 
                 <Flex gap="3" justify="center">

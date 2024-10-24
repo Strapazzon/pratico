@@ -1,5 +1,6 @@
 import React from "react";
 import { useDrag, useDrop } from "react-dnd";
+import styled from "styled-components";
 
 interface DraggableItemProps {
   id: string;
@@ -7,6 +8,13 @@ interface DraggableItemProps {
   moveItem: (dragIndex: number, hoverIndex: number) => void;
   children: React.ReactNode;
 }
+
+const Wrapper = styled.div`
+  padding: "var(--space-2) var(--space-3)";
+  &.dragging {
+    opacity: 0.5;
+  }
+`;
 
 export const DraggableItem: React.FC<DraggableItemProps> = ({
   id,
@@ -39,12 +47,11 @@ export const DraggableItem: React.FC<DraggableItemProps> = ({
   });
 
   const ref = React.useRef<HTMLDivElement>(null);
-  const opacity = isDragging ? 0.5 : 1;
   drag(drop(ref));
 
   return (
-    <div ref={ref} style={{ opacity }}>
+    <Wrapper ref={ref} className={isDragging ? "dragging" : ""}>
       {children}
-    </div>
+    </Wrapper>
   );
 };
