@@ -1,6 +1,6 @@
 import "server-only";
 
-import { db, InsertUserRow, UserRow } from "@database";
+import { db, InsertUserRow, UserCompleteRow, UserRow } from "@database";
 
 export async function insertUser(user: InsertUserRow): Promise<UserRow> {
   const insertedUser = await db
@@ -14,7 +14,7 @@ export async function insertUser(user: InsertUserRow): Promise<UserRow> {
 
 export async function findUserByEmail(
   email: string
-): Promise<UserRow | undefined> {
+): Promise<UserCompleteRow | undefined> {
   const user = await db
     .selectFrom("user")
     .selectAll()

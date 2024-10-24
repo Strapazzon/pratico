@@ -10,6 +10,7 @@ import { getUserDataFromSession } from "@server-actions/getUserDataFromSessionAc
 import {
   findOrganizationByIdAndUserOwnerId,
   insertOrganization,
+  listOrganizationsByUserId,
   updateOrganizationIfUserIsOwner,
 } from "@repositories/organizationRepository";
 
@@ -20,7 +21,7 @@ export async function newOrganizationAction(
 
   return await insertOrganization({
     ...organization,
-    id: undefined,
+    organizationId: undefined,
     createdAt: undefined,
     userOwnerId: id,
   } as unknown as InsertOrganizationRow);
@@ -44,4 +45,14 @@ export async function updateOrganizationAction(
     id,
     organization as unknown as UpdateOrganizationRow
   );
+}
+
+export async function listOrganizationsByUserIdAction(): Promise<
+  OrganizationEntity[]
+> {
+  const { id } = await getUserDataFromSession();
+
+  const organization = await listOrganizationsByUserId(id);
+
+  return organization as unknown as OrganizationEntity[];
 }

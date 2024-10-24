@@ -3,6 +3,8 @@ import React from "react";
 import { DashBoardDropdownMenu } from "@components/DashBoardDropdownMenu";
 import { ProfileMenu } from "@components/ProfileMenu";
 import styled from "styled-components";
+import { Flex } from "@radix-ui/themes";
+import { OrganizationSelector } from "@components/OrganizationSelector";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,7 +21,10 @@ export const DashboardHeader: React.FC = () => {
   return (
     <Wrapper>
       <DashBoardDropdownMenu />
-      <ProfileMenu />
+      <Flex gap="2" align="center">
+        <OrganizationSelector />
+        <ProfileMenu />
+      </Flex>
     </Wrapper>
   );
 };

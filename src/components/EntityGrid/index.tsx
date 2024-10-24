@@ -1,5 +1,5 @@
 import "./style.scss";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef, ColGroupDef } from "ag-grid-community";
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import useDebounce from "@hooks/useDebounce";
 import { useTranslations } from "next-intl";
+import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
 
 type GetRowResponse<E> = {
   rowCount: number;
@@ -21,7 +22,11 @@ type GetRowResponse<E> = {
 };
 
 export interface EntityGridDataSource<E> {
-  getRows: (page: number, perPage: number) => Promise<GetRowResponse<E>>;
+  getRows: (
+    page: number,
+    perPage: number,
+    organizationId: number
+  ) => Promise<GetRowResponse<E>>;
   searchRows?: (search: string) => Promise<GetRowResponse<E>>;
 }
 
@@ -32,6 +37,7 @@ interface EntityGridProps<E extends FieldValues> {
   paginationPageSize?: number;
   headerRightSlot?: React.ReactElement;
   disabledSearch?: boolean;
+  disablePagination?: boolean;
 }
 
 export const EntityGrid = <E extends FieldValues>({
@@ -40,50 +46,56 @@ export const EntityGrid = <E extends FieldValues>({
   paginationPageSize = 10,
   headerRightSlot,
   disabledSearch,
+  disablePagination,
 }: EntityGridProps<E>): React.ReactElement => {
-  const [rowData, setRowData] = React.useState<E[]>([]);
+  const t = useTranslations("entityGrid");
+  const [rowData, setRowData] = React.useState<E[]>();
   const [rowCount, setRowCount] = React.useState(0);
   const [totalPages, setTotalPages] = React.useState(0);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState<string>();
   const debouncedSearch = useDebounce(search, 500);
   const [isLoading, setIsLoading] = useState(false);
-  const t = useTranslations("entityGrid");
+  const { selectedOrganizationId } = useContext(AuthLoggedUserContext);
 
-  const loadFromDataSource = useCallback(async () => {
-    setIsLoading(true);
-    const { rowCount, rowData, totalPages } = await dataSource.getRows(
-      page,
-      paginationPageSize
-    );
-    setTotalPages(totalPages);
-    setRowCount(rowCount);
-    setRowData(rowData);
-    setIsLoading(false);
-  }, [dataSource, page, paginationPageSize]);
+  const loadFromDataSource = useCallback(
+    async (organizationId: number) => {
+      setIsLoading(true);
+      const { rowCount, rowData, totalPages } = await dataSource.getRows(
+        page,
+        paginationPageSize,
+        organizationId
+      );
+      setTotalPages(totalPages);
+      setRowCount(rowCount);
+      setRowData(rowData);
+      setIsLoading(false);
+    },
+    [dataSource, page, paginationPageSize]
+  );
 
   const nextPage = () => {
     if (page < totalPages) {
       setPage(page + 1);
-      loadFromDataSource();
+      loadFromDataSource(selectedOrganizationId);
     }
   };
 
   const prevPage = () => {
     if (page > 1) {
       setPage(page - 1);
-      loadFromDataSource();
+      loadFromDataSource(selectedOrganizationId);
     }
   };
 
   const goToFirstPage = () => {
     setPage(1);
-    loadFromDataSource();
+    loadFromDataSource(selectedOrganizationId);
   };
 
   const goToLastPage = () => {
     setPage(totalPages);
-    loadFromDataSource();
+    loadFromDataSource(selectedOrganizationId);
   };
 
   const rowStart = (page - 1) * paginationPageSize + 1;
@@ -102,13 +114,23 @@ export const EntityGrid = <E extends FieldValues>({
     setRowData(rowData);
   }, [dataSource, debouncedSearch]);
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     if (debouncedSearch) {
       searchRows();
-    } else {
-      loadFromDataSource();
+    } else if (!rowData) {
+      loadFromDataSource(selectedOrganizationId);
     }
-  }, [debouncedSearch, loadFromDataSource, searchRows]);
+  }, [
+    debouncedSearch,
+    loadFromDataSource,
+    rowData,
+    searchRows,
+    selectedOrganizationId,
+  ]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <div className="ag-theme-quartz">
@@ -148,7 +170,7 @@ export const EntityGrid = <E extends FieldValues>({
         columnDefs={colDefs}
       />
 
-      {!debouncedSearch ? (
+      {!disablePagination && !debouncedSearch ? (
         <Flex justify="between" align="center" py="3" gap="5">
           <Text size="3">{`${rowStart} to ${rowEnd} of ${rowCount} rows`}</Text>
 

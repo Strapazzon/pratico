@@ -27,8 +27,6 @@ export async function loginServerAction(
 
   const { salt, passwordHash } = user;
 
-  console.log("validation => ", validatePassword(password, salt, passwordHash));
-
   if (!password || !validatePassword(password, salt, passwordHash)) {
     return {
       error: "invalidCredentials",

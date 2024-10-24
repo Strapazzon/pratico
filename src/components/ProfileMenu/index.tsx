@@ -11,7 +11,6 @@ import React, { useContext } from "react";
 export const ProfileMenu: React.FC = () => {
   const { userData, userNameInitials } = useContext(AuthLoggedUserContext);
   const t = useTranslations("profileMenu");
-  const organizationId = userData?.organizations[0] ?? "new";
   const router = useRouter();
 
   const logoutHandler = () => {
@@ -36,13 +35,11 @@ export const ProfileMenu: React.FC = () => {
         </DropdownMenu.Label>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
-          onClick={() =>
-            router.push(`/dashboard/organization/${organizationId}/edit`)
-          }
+          onClick={() => router.push(`/dashboard/organizations`)}
         >
           <Flex align="center" gap="1">
             <Building2 size="16" />
-            {t("organization")}
+            {t("organizations")}
           </Flex>
         </DropdownMenu.Item>
         <DropdownMenu.Item>{t("profile")}</DropdownMenu.Item>

@@ -25,7 +25,7 @@ export async function generateMetadata(props: DashboardLayoutProps) {
   const t = await getTranslations("seo");
   const { params } = props;
   const { locale } = params;
-  console.log(params);
+
   return {
     title: t("title"),
     description: t("description"),

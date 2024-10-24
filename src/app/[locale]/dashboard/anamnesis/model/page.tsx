@@ -12,9 +12,9 @@ const AnamnesisModelPage: React.FC = () => {
   const t = useTranslations("anamnesisModel");
 
   const dataSource: EntityGridDataSource<AnamnesisModelEntity> = {
-    getRows: async (page: number, perPage: number) => {
+    getRows: async (page: number, perPage: number, organizationId: number) => {
       const { anamnesisModels, rowCount, totalPages } =
-        await getAnamnesisModelsAction(page, perPage);
+        await getAnamnesisModelsAction(page, perPage, organizationId);
 
       return {
         rowCount,

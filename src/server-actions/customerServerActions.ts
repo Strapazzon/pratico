@@ -48,15 +48,19 @@ export async function getCustomerAction(
   return await findCustomerByIdAndOrganizations(customerId, [organizationId]);
 }
 
-export async function getCustomersAction(page = 1, perPage = 10) {
-  const { organizations } = await getUserDataFromSession();
+export async function getCustomersAction(
+  page = 1,
+  perPage = 10,
+  organizationId: number
+) {
+  validateUserOrganizationRights(organizationId);
   const customers = (await listCustomersByOrganizationIds(
-    organizations,
+    [organizationId],
     page,
     perPage
   )) as unknown as CustomerEntity[];
 
-  const totalCount = await countCustomersByOrganizationIds(organizations);
+  const totalCount = await countCustomersByOrganizationIds([organizationId]);
   const totalPages = Math.ceil(totalCount / perPage);
 
   return { customers, totalCount, totalPages };

@@ -57,7 +57,7 @@
     "profile": "Perfil",
     "settings": "Configurações",
     "logout": "Sair",
-    "organization": "Empresa"
+    "organizations": "Empresas"
   },
   "seo": {
     "title": "Prático",
@@ -151,5 +151,15 @@
     "last": "Último",
     "first": "Primeiro",
     "previous": "Anterior"
+  },
+  "organizations": {
+    "title": "Empresas",
+    "organization": "Empresa",
+    "address": "Endereço",
+    "name": "Nome",
+    "city": "Cidade",
+    "country": "País",
+    "taxNumber": "Identificação Fiscal",
+    "addOrganization": "Nova Empresa"
   }
 }

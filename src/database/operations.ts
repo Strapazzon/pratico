@@ -5,9 +5,17 @@ import { InviteEntity } from "@entities/inviteEntity";
 import { OrganizationEntity } from "@entities/organizationEntity";
 import { UserEntity } from "@entities/userEntity";
 import { AnamnesisModelEntity } from "@entities/anamnesisModelEntity";
+import { OrganizationUserRoleEntity } from "@entities/organizationUserRoleEntity";
 
 // User operations
-export type UserRow = Selectable<UserEntity>;
+/**
+ * User entity with all fields.
+ * Use only for operations that require all fields.
+ */
+export type UserCompleteRow = Selectable<UserEntity>;
+export type UserRow = Selectable<
+  Omit<UserEntity, "passwordHash" | "salt" | "createdAt">
+>;
 export type InsertUserRow = Insertable<UserEntity>;
 export type UpdateUserRow = Updateable<UserEntity>;
 
@@ -29,3 +37,10 @@ export type UpdateOrganizationRow = Updateable<OrganizationEntity>;
 export type AnamnesisModelRow = Selectable<AnamnesisModelEntity>;
 export type InsertAnamnesisModelRow = Insertable<AnamnesisModelEntity>;
 export type UpdateAnamnesisModelRow = Updateable<AnamnesisModelEntity>;
+
+// OrganizationUserRole operations
+export type OrganizationUserRoleRow = Selectable<OrganizationUserRoleEntity>;
+export type InsertOrganizationUserRoleRow =
+  Insertable<OrganizationUserRoleEntity>;
+export type UpdateOrganizationUserRoleRow =
+  Updateable<OrganizationUserRoleEntity>;

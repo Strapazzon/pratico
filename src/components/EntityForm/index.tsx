@@ -2,22 +2,10 @@
 import React, { useEffect } from "react";
 import { FieldFormProps, FieldForm } from "@components/UI/FieldForm";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
-import { Button, Flex, Heading, Spinner } from "@radix-ui/themes";
+import { Button, Flex, Spinner } from "@radix-ui/themes";
 import { Save } from "lucide-react";
 import { Responsive } from "@radix-ui/themes/props";
-import styled from "styled-components";
-
-const Header = styled.div`
-  position: sticky;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: var(--color-background);
-  z-index: 20;
-  gap: var(--space-2);
-  padding: var(--space-2) 0;
-`;
+import { PageHeader } from "@components/UI/PageHeader";
 
 type EntityFormProps<E extends FieldValues> = {
   configFields: Record<keyof E, Omit<FieldFormProps, "name">>;
@@ -67,12 +55,7 @@ export const EntityForm = <E extends FieldValues>({
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Flex direction="column">
-            <Header>
-              <Flex gap="2">
-                {formIcon}
-                <Heading size="6">{formTitle}</Heading>
-              </Flex>
-
+            <PageHeader icon={formIcon} title={formTitle}>
               <Button
                 variant="solid"
                 type="submit"
@@ -82,7 +65,7 @@ export const EntityForm = <E extends FieldValues>({
                 <Spinner loading={isLoading}>{submitIcon}</Spinner>
                 {submitLabel}
               </Button>
-            </Header>
+            </PageHeader>
             <Flex wrap="wrap">
               {Object.entries(configFields).map(([key, config]) => (
                 <FieldForm key={key} {...config} name={key} />

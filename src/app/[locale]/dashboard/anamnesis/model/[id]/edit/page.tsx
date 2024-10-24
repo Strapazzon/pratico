@@ -42,7 +42,7 @@ const AnamnesisModelPage: React.FC<AnamnesisModelPageProps> = ({
 
   const loadAnamnesisModel = useCallback(async () => {
     setIsLoading(true);
-    console.log("id", id, "selectedOrganizationId", selectedOrganizationId);
+
     const anamnesisModel = await getAnamnesisModelAction(
       Number(id),
       selectedOrganizationId

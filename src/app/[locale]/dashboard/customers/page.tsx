@@ -16,18 +16,22 @@ const CustomersPage: React.FC = () => {
   const t = useTranslations("customers");
 
   const dataSource: EntityGridDataSource<CustomerEntity> = {
-    getRows: useCallback(async (page: number, perPage: number) => {
-      const { customers, totalCount, totalPages } = await getCustomersAction(
-        page,
-        perPage
-      );
+    getRows: useCallback(
+      async (page: number, perPage: number, organizationId: number) => {
+        const { customers, totalCount, totalPages } = await getCustomersAction(
+          page,
+          perPage,
+          organizationId
+        );
 
-      return {
-        rowData: customers,
-        rowCount: totalCount,
-        totalPages,
-      };
-    }, []),
+        return {
+          rowData: customers,
+          rowCount: totalCount,
+          totalPages,
+        };
+      },
+      []
+    ),
     searchRows: useCallback(async (search: string) => {
       const { customers, rowCount, totalPages } = await searchCustomersAction(
         search,

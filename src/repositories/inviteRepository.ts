@@ -22,7 +22,5 @@ export async function inviteCodeIsValid(inviteCode: string): Promise<boolean> {
     .where("usedAt", "is", null)
     .executeTakeFirst();
 
-  console.log("Invite validation => ", inviteCode, JSON.stringify(invite));
-
   return !!invite;
 }

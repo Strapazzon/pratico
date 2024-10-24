@@ -1,6 +1,7 @@
 "use client";
 import { EntityForm } from "@components/EntityForm";
 import { OrganizationEntity } from "@entities/organizationEntity";
+import { useRouter } from "@i18n/routing";
 import { AuthLoggedUserContext } from "@providers/authLoggedUserProvider";
 import { refreshTokenServerAction } from "@server-actions/loginServerAction";
 import {
@@ -26,6 +27,7 @@ const NewOrganizationPage: React.FC<NewOrganizationPageProps> = ({
   const [isLoading, setIsLoading] = React.useState(false);
   const { refreshUserData } = useContext(AuthLoggedUserContext);
   const [values, setValues] = React.useState<OrganizationEntity>();
+  const router = useRouter();
 
   if (organizationId !== "new" && Number.isNaN(Number(organizationId))) {
     throw new Error("Invalid organizationId");
@@ -33,11 +35,12 @@ const NewOrganizationPage: React.FC<NewOrganizationPageProps> = ({
 
   const createOrganization = useCallback(
     async (data: OrganizationEntity) => {
-      await newOrganizationAction(data);
+      const newOrg = await newOrganizationAction(data);
       await refreshTokenServerAction();
       await refreshUserData();
+      router.push(`/dashboard/organizations/${newOrg.organizationId}/edit`);
     },
-    [refreshUserData]
+    [refreshUserData, router]
   );
 
   const onSubmitHandler = async (data: OrganizationEntity) => {

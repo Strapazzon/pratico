@@ -56,7 +56,7 @@
     "profile": "Profile",
     "settings": "Settings",
     "logout": "Logout",
-    "organization": "Organization"
+    "organizations": "Organizations"
   },
   "seo": {
     "title": "Prático",
@@ -149,5 +149,15 @@
     "last": "Last",
     "first": "First",
     "previous": "Previous"
+  },
+  "organizations": {
+    "title": "Organizations",
+    "organization": "Organization",
+    "name": "Name",
+    "city": "City",
+    "country": "Country",
+    "address": "Address",
+    "taxNumber": "Tax Number",
+    "addOrganization": "New Organization"
   }
 }

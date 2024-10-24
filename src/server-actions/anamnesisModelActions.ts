@@ -10,10 +10,14 @@ import {
 } from "@repositories/anamnesisModelRepository";
 import { validateUserOrganizationRights } from "@lib/auth/validateUserOrganizationRights";
 
-export async function getAnamnesisModelsAction(page = 1, perPage = 10) {
-  const { organizations } = await getUserDataFromSession();
+export async function getAnamnesisModelsAction(
+  page = 1,
+  perPage = 10,
+  organizationId: number
+) {
+  validateUserOrganizationRights(organizationId);
   const anamnesisModels = await listAnamnesisModelsByOrganizationId(
-    organizations[0],
+    organizationId,
     page,
     perPage
   );
@@ -25,12 +29,6 @@ export async function getAnamnesisModelAction(
   anamnesisModelId: number,
   organizationId: number
 ) {
-  console.log(
-    "anamnesisModelId",
-    anamnesisModelId,
-    "organizationId",
-    organizationId
-  );
   validateUserOrganizationRights(organizationId);
 
   const anamnesisModel = await findAnamnesisModelByIdAndOrganizationId(
